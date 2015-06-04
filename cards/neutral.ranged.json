@@ -1,0 +1,12 @@
+[
+	{
+		"name": "Yennefer of Vengerberg",
+		"description": "Magic is Chaos, Art and Science. It is a curse, a blessing and a progression.",
+		"power": 7,
+		"max": 1,
+		"ability": "medic",
+		"hero": true,
+		"type": "unit",
+		"range": "ranged"
+	}
+]

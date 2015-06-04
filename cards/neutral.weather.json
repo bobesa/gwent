@@ -1,0 +1,26 @@
+[
+	{
+		"name": "Biting Frost",
+		"description": "Best part about frost - bodies of the fallen don't rot so quickly.",
+		"type": "weather",
+		"range": "close"
+	},
+	{
+		"name": "Clear Weather",
+		"description": "The sun's shinin', Dromle! The sun's shinin'! Maybe there's hope left after all....",
+		"type": "weather",
+		"range": "none"
+	},
+	{
+		"name": "Impenetrable Fog",
+		"description": "A good commander's dream... a bad one's horror.",
+		"type": "weather",
+		"range": "ranged"
+	},
+	{
+		"name": "Torrential Rain",
+		"description": "Even the rain in this lane smells like piss.",
+		"type": "weather",
+		"range": "siege"
+	}
+]

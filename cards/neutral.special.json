@@ -1,0 +1,17 @@
+[
+	{
+		"name": "Commander's Horn",
+		"description": "Plus one to morale, minus three to hearing.",
+		"type": "horn"
+	},
+	{
+		"name": "Decoy",
+		"description": "When you run out of peasants, decoys also make decent arrow fodder.",
+		"type": "decoy"
+	},
+	{
+		"name": "Scorch",
+		"description": "Pillars of flame turn the mightiest to ash. All others tremble in shock and awe.",
+		"type": "scorch"
+	}
+]

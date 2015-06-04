@@ -1,0 +1,24 @@
+[
+	{
+		"name": "Emil Regis Rohellec Terzieff",
+		"description": "Men, the polite ones, at least, would call me a monster. A blood-drinking freak.",
+		"power": 5,
+		"type": "unit",
+		"range": "close"
+	},
+	{
+		"name": "Villentretenmerth",
+		"description": "Also calls himself Borkh Three Jackdaws... he's not the best at names.",
+		"power": 7,
+		"type": "unit",
+		"ability": "scorch_10_close",
+		"range": "close"
+	},
+	{
+		"name": "Zoltan Chivay",
+		"description": "Life without old mates and booze is like a woman without a rump.",
+		"power": 5,
+		"type": "unit",
+		"range": "close"
+	}
+]
