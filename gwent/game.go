@@ -8,16 +8,16 @@ const (
 	FACTION_SCOIATAEL //Decides who takes first turn
 )
 
-func MakeGame(p1 *Player, p2 *Player) (*Game) {
+func MakeGame(p1 *Player, p2 *Player) (*Game) {		
+	//Setup game
 	g := &Game{
 		Closed: false,
 		Player1: p1,
 		Player2: p2,
+		eventIdChannel: make(chan int64, 10),
 	}
-	g.Reset()
 	
 	//Generate event ID channel
-	g.eventIdChannel = make(chan int64, 1)	
 	go func(){
 		eId := int64(0)
 		for !g.Closed {
@@ -25,6 +25,9 @@ func MakeGame(p1 *Player, p2 *Player) (*Game) {
 			g.eventIdChannel <- eId
 		}
 	}()
+	
+	//Reset game
+	g.Reset()
 	
 	return g
 }
@@ -49,9 +52,13 @@ func (g *Game) GetNextEventId() int64 {
 	return <- g.eventIdChannel
 }
 
+func (g *Game) MakeEvent(card, target Card, eventType string, p *Player) {
+	g.PostEvent(MakeEvent(g, card, target, eventType, p))
+}
+
 func (g *Game) PostEvent(e Event) {
-	g.Player1.NewEvents <- e
-	g.Player2.NewEvents <- e
+	//g.Player1.NewEvents <- e
+	//g.Player2.NewEvents <- e
 	g.History = append(g.History, e)
 }
 

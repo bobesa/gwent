@@ -1,27 +1,34 @@
 package gwent
 
 const (
-	TYPE_DRAW = "draw"
+	EVENT_TO_HAND = "to_hand" //"Card" should go to hand
+	EVENT_TO_DECK = "to_deck" //"Card" should go to deck
+	EVENT_TO_GRAVE = "to_grave" //"Card" should go to grave
+	EVENT_TO_TABLE = "to_table" //"Card" should go to table
+	
+	EVENT_PICK = "pick" //From server: Sent with Cards for player to select	
+	EVENT_PICKED = "picked" //From player: Sent with selected Card
 )
 
 type Event struct {	
 	Id int64 `json:"id"`
-	Message string `json:"msg"`
-	Type string `json:"type"`
-	Source GUID `json:"source"` //GUID of source card
-	Target string `json:"target"` //grave, close, ranged, siege, hand, popup
+	Type string `json:"type",omitempty`
+	Cards Cards `json:"cards",omitempty`
+	Card GUID `json:"card",omitempty` //GUID of selected card
+	Target GUID `json:"target",omitempty` //GUID of target card
 	Player int	`json:"player"`	//1 = player 1 etc.
 	
-	game Game
+	game *Game
 }
 
-func MakeEvent(g Game, source Card, msg, t, target string, p *Player) Event {
+func MakeEvent(g *Game, card, target Card, eventType string, p *Player) Event {
 	e := Event{
 		Id: g.GetNextEventId(),
-		Message: msg,
-		Type: t,
-		Source: source.GetGUID(),
-		Target: target,		
+		Card: card.GetGUID(),
+		Target: card.GetGUID(),
+		Type: eventType,
+			
+		game: g,	
 	}
 	
 	if g.Player1 == p {

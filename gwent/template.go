@@ -1,14 +1,16 @@
 package gwent
 
 type CardTemplate struct {
-	Name string `json:"name"`
-	Description string `json:"description"`
-	Power int `json:"power"`
-	Hero bool `json:"hero"`
-	Type string `json:"type"`
-	Range string `json:"range"`
-	Faction string `json:"faction"`
-	Ability string `json:"ability"`
+	Id int64 `json:"id"`
+	Name string `json:"name,omitempty"`
+	Description string `json:"description,omitempty"`
+	Power int `json:"power,omitempty"`
+	Hero bool `json:"hero,omitempty"`
+	Type string `json:"type,omitempty"`
+	Range string `json:"range,omitempty"`
+	Faction string `json:"faction,omitempty"`
+	Ability string `json:"ability,omitempty"`
+	MaxCount int `json:"max,omitempty"`
 }
 
 func GetLeaderEffectByName(name string) int {

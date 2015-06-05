@@ -2,10 +2,9 @@ package gwent
 
 type GUID int64
 
-var guidChannel chan GUID
+var guidChannel chan GUID = make(chan GUID, 1)
 
 func init() {
-	guidChannel = make(chan GUID)
 	go func(){
 		guid := GUID(0)
 		for {

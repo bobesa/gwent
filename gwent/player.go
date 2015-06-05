@@ -42,6 +42,10 @@ type Player struct {
 	NewEvents chan Event
 }
 
+func (p *Player) IsActive() bool {
+	return p == p.Game.GetCurrentPlayer()
+}
+
 func (p *Player) Play(card Card, target Card) {
 	card.Play(p, target)
 	p.Hand = p.Hand.Without(card)
@@ -221,8 +225,10 @@ func (p *Player) GiveCard(c Card) {
 func (p *Player) DrawCard() {	
 	if len(p.Deck) > 0 {
 		index := rand.Intn(len(p.Deck)) //random card index from rest of the deck
-		p.Hand = append(p.Hand, p.Deck[index])
+		card := p.Deck[index]
+		p.Hand = append(p.Hand, card)
 		p.Deck = append(p.Deck[:index], p.Deck[index+1:]...)
+		p.Game.MakeEvent(card, nil, EVENT_TO_HAND, p)
 	}
 }
 
@@ -236,6 +242,9 @@ func (p *Player) Reset() {
 	//Go trough Deck & generate GUIDs
 	for _, c := range p.Deck {
 		c.SetGUID(GetNextGUID())
+	}
+	if p.Leader != nil {
+		p.Leader.SetGUID(GetNextGUID())
 	}
 	
 	//Give 10 random cards from CurrentDeck to Hand

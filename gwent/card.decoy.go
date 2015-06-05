@@ -1,9 +1,10 @@
 package gwent
 
 type CardDecoy struct {
-	Name, Description string
-	Row int
-	Guid GUID
+	Name string `json:"name"`
+	Description string `json:"description"`
+	Row int `json:"row"`
+	Guid GUID `json:"guid"`
 }
 
 func (c *CardDecoy) Play(p *Player, target Card) {
