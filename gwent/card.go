@@ -4,8 +4,11 @@ import (
 	"math/rand"
 )
 
+// Cards is a collection of Card objects
 type Cards []Card
 
+// Scorch kills certain cards of given player based on given power (pwr)
+// Reports back actual cards and destroyed cards
 func (deck Cards) Scorch(owner *Player, pwr int) (Cards, Cards) {
 	cards, destroyed := Cards{}, Cards{}
 	for _, card := range deck {
@@ -18,6 +21,7 @@ func (deck Cards) Scorch(owner *Player, pwr int) (Cards, Cards) {
 	return cards, destroyed
 }
 
+// Without reports back Cards without a single given card
 func (deck Cards) Without(c Card) Cards {
 	for i, card := range deck {
 		if card == c {
@@ -27,6 +31,7 @@ func (deck Cards) Without(c Card) Cards {
 	return deck
 }
 
+// WithoutType reports back Cards without cards of given type and range
 func (deck Cards) WithoutType(cardType CardType, cardRange CardRange) (Cards, Card) {
 	for i, card := range deck {
 		if card.Type() == cardType && card.Range() == cardRange {
@@ -36,6 +41,7 @@ func (deck Cards) WithoutType(cardType CardType, cardRange CardRange) (Cards, Ca
 	return deck, nil
 }
 
+// WithoutRandom reports back Cards without one random card
 func (deck Cards) WithoutRandom() (Cards, Card) {
 	if len(deck) > 0 {
 		i := rand.Intn(len(deck))
@@ -45,6 +51,7 @@ func (deck Cards) WithoutRandom() (Cards, Card) {
 	return deck, nil
 }
 
+// Has reports if given card is in the collection
 func (deck Cards) Has(card Card) bool {
 	for _, c := range deck {
 		if c == card {
@@ -54,6 +61,7 @@ func (deck Cards) Has(card Card) bool {
 	return false
 }
 
+// Card describes what methods must be on all card types
 type Card interface {
 	Play(*Player, Card)
 	PlayOnRow(*Player, CardRange)

@@ -1,11 +1,13 @@
 package gwent
 
+// CardDecoy replaces any oponnents card
 type CardDecoy struct {
 	Row CardRange `json:"row"`
 
 	BasicCard
 }
 
+// Play plays decoy card on given target
 func (c *CardDecoy) Play(p *Player, target Card) {
 	if target != nil {
 		p.RowClose = p.RowClose.Without(target)
@@ -17,6 +19,7 @@ func (c *CardDecoy) Play(p *Player, target Card) {
 	}
 }
 
+// PutOnTable puts decoy card onto the table
 func (c *CardDecoy) PutOnTable(p *Player) {
 	//Add card to proper row
 	switch c.Range() {
@@ -29,14 +32,12 @@ func (c *CardDecoy) PutOnTable(p *Player) {
 	}
 }
 
-func (c *CardDecoy) Type() CardType {
-	return TypeHorn
-}
-
+// Range reports what row has been chosen
 func (c *CardDecoy) Range() CardRange {
 	return c.Row
 }
 
+// Targettable reports that decoy card has to be targetted on some other unit card
 func (c *CardDecoy) Targettable() bool {
 	return true
 }
