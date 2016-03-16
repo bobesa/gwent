@@ -1,9 +1,9 @@
 package gwent
 
 type BasicCard struct {
-	Name string `json:"name"`
+	Name        string `json:"name"`
 	Description string `json:"desc"`
-	ID GUID `json:"guid"`
+	ID          GUID   `json:"guid"`
 }
 
 func (c BasicCard) Play(p *Player, target Card) {

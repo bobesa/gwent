@@ -12,15 +12,15 @@ func (c *CardWeather) Play(p *Player, target Card) {
 
 func (c *CardWeather) PutOnTable(p *Player) {
 	//Set weather card to proper row
-	switch(c.Target) {
-		case RangeClose:
-			p.Game.WeatherClose = true
-		case RangeRanged:
-			p.Game.WeatherRanged = true
-		case RangeSiege:
-			p.Game.WeatherSiege = true
-		case RangeNone:
-			p.Game.ClearWeather()
+	switch c.Target {
+	case RangeClose:
+		p.Game.WeatherClose = true
+	case RangeRanged:
+		p.Game.WeatherRanged = true
+	case RangeSiege:
+		p.Game.WeatherSiege = true
+	case RangeNone:
+		p.Game.ClearWeather()
 	}
 }
 

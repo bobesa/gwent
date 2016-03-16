@@ -1,47 +1,47 @@
 package gwent
 
-func MakeGame(p1 *Player, p2 *Player) (*Game) {		
+func MakeGame(p1 *Player, p2 *Player) *Game {
 	//Setup game
 	g := &Game{
-		Closed: false,
-		Player1: p1,
-		Player2: p2,
+		Closed:         false,
+		Player1:        p1,
+		Player2:        p2,
 		eventIdChannel: make(chan int64, 10),
 	}
-	
+
 	//Generate event ID channel
-	go func(){
+	go func() {
 		eId := int64(0)
 		for !g.Closed {
 			eId++
 			g.eventIdChannel <- eId
 		}
 	}()
-	
+
 	//Reset game
 	g.Reset()
-	
+
 	return g
 }
 
 type Game struct {
 	//States
-	Closed bool
-	Turn int
+	Closed                                    bool
+	Turn                                      int
 	WeatherClose, WeatherRanged, WeatherSiege bool
-	
+
 	//Players
 	LastRoundWinner *Player
-	Player1 *Player
-	Player2 *Player
-	
+	Player1         *Player
+	Player2         *Player
+
 	//Events
-	History []Event
+	History        []Event
 	eventIdChannel chan int64
 }
 
 func (g *Game) GetNextEventId() int64 {
-	return <- g.eventIdChannel
+	return <-g.eventIdChannel
 }
 
 func (g *Game) MakeEvent(card, target Card, eventType string, p *Player) {
@@ -54,8 +54,8 @@ func (g *Game) PostEvent(e Event) {
 	g.History = append(g.History, e)
 }
 
-func (g *Game) GetCurrentPlayer() (*Player) {
-	if g.Turn % 2 == 0 {
+func (g *Game) GetCurrentPlayer() *Player {
+	if g.Turn%2 == 0 {
 		return g.Player1
 	} else {
 		return g.Player2
@@ -71,7 +71,7 @@ func (g *Game) Reset() {
 }
 
 func (g *Game) ClearWeather() {
-	g.WeatherClose, g.WeatherRanged, g.WeatherSiege = false, false, false	
+	g.WeatherClose, g.WeatherRanged, g.WeatherSiege = false, false, false
 }
 
 func (g *Game) NextRound() {
@@ -79,14 +79,14 @@ func (g *Game) NextRound() {
 	if g.Player1.Lifes == 0 || g.Player2.Lifes == 0 {
 		//WINNER
 	}
-	
+
 	//Reset Weather
 	g.ClearWeather()
-	
+
 	//Reset Passed
 	g.Player1.Passed = false
 	g.Player2.Passed = false
-	
+
 	//Reset Rows
 	g.Player1.ResetRows()
 	g.Player2.ResetRows()
@@ -94,11 +94,11 @@ func (g *Game) NextRound() {
 
 func (g *Game) Next() {
 	g.Turn++
-	
+
 	if g.Player1.Passed && g.Player2.Passed {
 		//Compute winner
 		pwr1, pwr2 := g.Player1.ComputePower(), g.Player2.ComputePower()
-		
+
 		if pwr1 > pwr2 {
 			//Player1 wins
 			g.Player2.Lost()
@@ -109,18 +109,18 @@ func (g *Game) Next() {
 			//Tie
 			if g.Player1.Faction == FactionNilfgaard && g.Player2.Faction != FactionNilfgaard {
 				//Player 1 is NILFGAARD
-				g.Player2.Lost()				
+				g.Player2.Lost()
 			} else if g.Player1.Faction != FactionNilfgaard && g.Player2.Faction == FactionNilfgaard {
 				//Player 2 is NILFGAARD
-				g.Player1.Lost()				
+				g.Player1.Lost()
 			} else {
 				//Both players lose life
 				g.Player1.Lost()
 				g.Player2.Lost()
 				g.LastRoundWinner = nil
-			}		
+			}
 		}
-		
+
 		g.NextRound()
 	} else if g.GetCurrentPlayer().Passed {
 		g.Next()

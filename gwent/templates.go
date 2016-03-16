@@ -1,18 +1,18 @@
 package gwent
 
 import (
-	"io/ioutil"
 	"encoding/json"
+	"io/ioutil"
 )
 
 var AllTemplates []CardTemplate
 
 func init() {
-	AllTemplates = make([]CardTemplate,0)
-	
+	AllTemplates = make([]CardTemplate, 0)
+
 	templateId := int64(0)
 	directory := "./cards"
-	
+
 	files, _ := ioutil.ReadDir(directory)
 	for _, file := range files {
 		data, err := ioutil.ReadFile(directory + "/" + file.Name())
@@ -29,5 +29,5 @@ func init() {
 			}
 		}
 	}
-	
+
 }

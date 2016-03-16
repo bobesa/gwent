@@ -15,7 +15,7 @@ func (deck Cards) Scorch(owner *Player, pwr int) (Cards, Cards) {
 			cards = append(cards, card)
 		}
 	}
-	return cards, destroyed	
+	return cards, destroyed
 }
 
 func (deck Cards) Without(c Card) Cards {
@@ -66,7 +66,7 @@ type Card interface {
 	IsHero() bool
 	IsAppliedOnRow() bool
 	IsTargettable() bool
-	
+
 	//Guids
 	SetGUID(GUID)
 	GUID() GUID

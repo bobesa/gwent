@@ -2,18 +2,18 @@ package gwent
 
 import "testing"
 
-func TestUnitCards(t *testing.T) {	
+func TestUnitCards(t *testing.T) {
 	//Prepare players & cards
-	p1, p2 := MakePlayer("test 1", FactionNorthernRealms, GenerateDeckWithUnitCards(RangeClose,5,30)), MakePlayer("test 2", FactionMonsters, GenerateDeckWithUnitCards(RangeClose,5,30))
-	
+	p1, p2 := MakePlayer("test 1", FactionNorthernRealms, GenerateDeckWithUnitCards(RangeClose, 5, 30)), MakePlayer("test 2", FactionMonsters, GenerateDeckWithUnitCards(RangeClose, 5, 30))
+
 	//Create & reset game
 	g := MakeGame(p1, p2)
-	
+
 	//Play unit card
-	card := &CardUnit{ Hero:false, Power: 5, Range: RangeClose }
+	card := &CardUnit{Hero: false, Power: 5, Range: RangeClose}
 	p1.GiveCard(card)
 	p1.Play(card, nil)
-	
+
 	//Apply weather (power = 1)
 	p1.Game.WeatherClose = true
 	if card.GetPower(p1) != 1 {
@@ -23,7 +23,7 @@ func TestUnitCards(t *testing.T) {
 	if card.GetPower(p1) != 5 {
 		t.Error("Power of card should be back to 5 when weather is cleared")
 	}
-	
+
 	//Apply horn (double power)
 	p1.HornClose = true
 	if card.GetPower(p1) != 10 {
@@ -33,13 +33,13 @@ func TestUnitCards(t *testing.T) {
 	if card.GetPower(p1) != 2 {
 		t.Error("Power of card should drop to 2 when horn & weather is applied")
 	}
-	
+
 	//Card is hero (ignore weather)
 	card.Hero = true
 	if card.GetPower(p1) != 10 {
 		t.Error("Power of card should be 10 when horn & weather is applied on hero card")
-	}	
-	
+	}
+
 	//End game
-	g.Next();
+	g.Next()
 }

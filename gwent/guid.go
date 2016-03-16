@@ -5,7 +5,7 @@ type GUID int64
 var guidChannel chan GUID = make(chan GUID, 1)
 
 func init() {
-	go func(){
+	go func() {
 		guid := GUID(0)
 		for {
 			guid++
@@ -15,5 +15,5 @@ func init() {
 }
 
 func GetNextGUID() GUID {
-	return <- guidChannel
+	return <-guidChannel
 }

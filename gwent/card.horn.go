@@ -6,7 +6,7 @@ type CardHorn struct {
 
 func (c *CardHorn) PlayOnRow(p *Player, row CardRange) {
 	//Apply horn
-	switch(row){
+	switch row {
 	case RangeClose:
 		p.HornClose = true
 	case RangeRanged:

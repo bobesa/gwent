@@ -5,12 +5,12 @@ const (
 )
 
 type CardUnit struct {
-	Type CardType
-	Range CardRange
+	Type    CardType
+	Range   CardRange
 	Faction CardFaction
 
 	Power, Ability int
-	Hero bool
+	Hero           bool
 
 	BasicCard
 }
@@ -21,13 +21,13 @@ func (c *CardUnit) Play(p *Player, target Card) {
 
 func (c *CardUnit) PutOnTable(p *Player) {
 	//Add card to proper row
-	switch(c.GetRange()) {
-		case RangeClose:
-			p.RowClose = append(p.RowClose, c)
-		case RangeRanged:
-			p.RowRanged = append(p.RowRanged, c)
-		case RangeSiege:
-			p.RowSiege = append(p.RowSiege, c)
+	switch c.GetRange() {
+	case RangeClose:
+		p.RowClose = append(p.RowClose, c)
+	case RangeRanged:
+		p.RowRanged = append(p.RowRanged, c)
+	case RangeSiege:
+		p.RowSiege = append(p.RowSiege, c)
 	}
 }
 
@@ -44,28 +44,27 @@ func (c *CardUnit) GetRange() CardRange {
 }
 
 func (c *CardUnit) GetPower(p *Player) int {
-	pwr := c.Power	
-		
+	pwr := c.Power
+
 	//Apply weather if not a hero card
-	if !c.IsHero() && (
-		(c.GetRange() == RangeClose && p.Game.WeatherClose) ||
+	if !c.IsHero() && ((c.GetRange() == RangeClose && p.Game.WeatherClose) ||
 		(c.GetRange() == RangeRanged && p.Game.WeatherRanged) ||
-		(c.GetRange() == RangeSiege && p.Game.WeatherSiege) ) {
+		(c.GetRange() == RangeSiege && p.Game.WeatherSiege)) {
 		pwr = 1
 	}
-	
+
 	//Apply horn if available
 	if (c.GetRange() == RangeClose && p.HornClose) ||
 		(c.GetRange() == RangeRanged && p.HornRanged) ||
 		(c.GetRange() == RangeSiege && p.HornSiege) {
 		pwr *= 2
 	}
-	
+
 	return pwr
 }
 
 func (c *CardUnit) IsHero() bool {
-	return c.Hero	
+	return c.Hero
 }
 
 func (c *CardUnit) IsTargetable() bool {

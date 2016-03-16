@@ -13,19 +13,19 @@ func (c *CardDecoy) Play(p *Player, target Card) {
 		p.RowSiege = p.RowSiege.Without(target)
 		p.GiveCard(target)
 		c.Row = target.GetRange()
-		c.PutOnTable(p)		
+		c.PutOnTable(p)
 	}
 }
 
 func (c *CardDecoy) PutOnTable(p *Player) {
 	//Add card to proper row
-	switch(c.GetRange()) {
-		case RangeClose:
-			p.RowClose = append(p.RowClose, c)
-		case RangeRanged:
-			p.RowRanged = append(p.RowRanged, c)
-		case RangeSiege:
-			p.RowSiege = append(p.RowSiege, c)
+	switch c.GetRange() {
+	case RangeClose:
+		p.RowClose = append(p.RowClose, c)
+	case RangeRanged:
+		p.RowRanged = append(p.RowRanged, c)
+	case RangeSiege:
+		p.RowSiege = append(p.RowSiege, c)
 	}
 }
 
