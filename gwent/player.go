@@ -228,7 +228,7 @@ func (p *Player) DrawCard() {
 		card := p.Deck[index]
 		p.Hand = append(p.Hand, card)
 		p.Deck = append(p.Deck[:index], p.Deck[index+1:]...)
-		p.Game.MakeEvent(card, nil, EVENT_TO_HAND, p)
+		p.Game.MakeEvent(card, nil, EventToHand, p)
 	}
 }
 

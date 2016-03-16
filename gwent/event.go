@@ -1,21 +1,21 @@
 package gwent
 
 const (
-	EVENT_TO_HAND  = "to_hand"  //"Card" should go to hand
-	EVENT_TO_DECK  = "to_deck"  //"Card" should go to deck
-	EVENT_TO_GRAVE = "to_grave" //"Card" should go to grave
-	EVENT_TO_TABLE = "to_table" //"Card" should go to table
+	EventToHand  = "to_hand"  //"Card" should go to hand
+	EventToDeck  = "to_deck"  //"Card" should go to deck
+	EventToGrave = "to_grave" //"Card" should go to grave
+	EventToTable = "to_table" //"Card" should go to table
 
-	EVENT_PICK   = "pick"   //From server: Sent with Cards for player to select
-	EVENT_PICKED = "picked" //From player: Sent with selected Card
+	EventPick   = "pick"   //From server: Sent with Cards for player to select
+	EventPicked = "picked" //From player: Sent with selected Card
 )
 
 type Event struct {
 	Id     int64  `json:"id"`
-	Type   string `json:"type",omitempty`
-	Cards  Cards  `json:"cards",omitempty`
-	Card   GUID   `json:"card",omitempty`   //GUID of selected card
-	Target GUID   `json:"target",omitempty` //GUID of target card
+	Type   string `json:"type,omitempty"`
+	Cards  Cards  `json:"cards,omitempty"`
+	Card   GUID   `json:"card,omitempty"`   //GUID of selected card
+	Target GUID   `json:"target,omitempty"` //GUID of target card
 	Player int    `json:"player"`           //1 = player 1 etc.
 
 	game *Game
