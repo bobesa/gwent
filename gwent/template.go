@@ -41,11 +41,11 @@ func (t CardTemplate) Make() Card {
 	case "leader":
 		return &CardLeader{
 			BasicCard: BasicCard{
-				Name:        t.Name,
-				Description: t.Description,
+				CardName:        t.Name,
+				CardDescription: t.Description,
 			},
-			Faction: GetFactionByName(t.Faction),
-			Effect:  GetLeaderEffectByName(t.Ability),
+			LeaderFaction: GetFactionByName(t.Faction),
+			LeaderEffect:  GetLeaderEffectByName(t.Ability),
 		}
 	}
 	return nil

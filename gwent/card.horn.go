@@ -16,10 +16,10 @@ func (c *CardHorn) PlayOnRow(p *Player, row CardRange) {
 	}
 }
 
-func (c *CardHorn) GetType() CardType {
+func (c *CardHorn) Type() CardType {
 	return TypeHorn
 }
 
-func (c *CardHorn) IsAppliedOnRow() bool {
+func (c *CardHorn) AppliedOnRow() bool {
 	return true
 }

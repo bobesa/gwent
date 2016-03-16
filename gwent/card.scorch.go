@@ -1,8 +1,6 @@
 package gwent
 
 type CardScorch struct {
-	Type int
-
 	BasicCard
 }
 
@@ -11,6 +9,6 @@ func (c *CardScorch) Play(p *Player, target Card) {
 	p.Scorch()
 }
 
-func (c *CardScorch) GetType() CardType {
+func (c *CardScorch) Type() CardType {
 	return TypeScorch
 }

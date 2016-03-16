@@ -12,14 +12,14 @@ func (c *CardDecoy) Play(p *Player, target Card) {
 		p.RowRanged = p.RowRanged.Without(target)
 		p.RowSiege = p.RowSiege.Without(target)
 		p.GiveCard(target)
-		c.Row = target.GetRange()
+		c.Row = target.Range()
 		c.PutOnTable(p)
 	}
 }
 
 func (c *CardDecoy) PutOnTable(p *Player) {
 	//Add card to proper row
-	switch c.GetRange() {
+	switch c.Range() {
 	case RangeClose:
 		p.RowClose = append(p.RowClose, c)
 	case RangeRanged:
@@ -29,14 +29,14 @@ func (c *CardDecoy) PutOnTable(p *Player) {
 	}
 }
 
-func (c *CardDecoy) GetType() CardType {
+func (c *CardDecoy) Type() CardType {
 	return TypeHorn
 }
 
-func (c *CardDecoy) GetRange() CardRange {
+func (c *CardDecoy) Range() CardRange {
 	return c.Row
 }
 
-func (c *CardDecoy) IsTargettable() bool {
+func (c *CardDecoy) Targettable() bool {
 	return true
 }

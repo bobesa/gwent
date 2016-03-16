@@ -30,8 +30,8 @@ const (
 
 type CardLeader struct {
 	CannotUse bool
-	Effect    int
-	Faction   CardFaction
+	LeaderEffect    int
+	LeaderFaction   CardFaction
 
 	BasicCard
 }
@@ -48,11 +48,11 @@ func (c *CardLeader) PlayWeatherFromDeck(where CardRange, p *Player) bool {
 }
 
 func (c *CardLeader) Play(p *Player, target Card) {
-	if !c.IsAppliedOnRow() {
+	if !c.AppliedOnRow() {
 		c.Cancel()
 
 		//Process various effects (by Type)
-		switch c.Effect {
+		switch c.LeaderEffect {
 		//Other
 		case LEADER_FX_CANCEL:
 			p.OtherPlayer().Leader.Cancel()
@@ -69,7 +69,7 @@ func (c *CardLeader) Play(p *Player, target Card) {
 			if p.OtherPlayer().ComputePowerOfRow(RangeClose) >= 10 {
 				maxPwr := 0
 				for _, card := range p.OtherPlayer().RowClose {
-					cardPower := card.GetPower(p.OtherPlayer())
+					cardPower := card.Power(p.OtherPlayer())
 					if cardPower > maxPwr {
 						maxPwr = cardPower
 					}
@@ -81,7 +81,7 @@ func (c *CardLeader) Play(p *Player, target Card) {
 			if p.OtherPlayer().ComputePowerOfRow(RangeSiege) >= 10 {
 				maxPwr := 0
 				for _, card := range p.OtherPlayer().RowSiege {
-					cardPower := card.GetPower(p.OtherPlayer())
+					cardPower := card.Power(p.OtherPlayer())
 					if cardPower > maxPwr {
 						maxPwr = cardPower
 					}
@@ -117,11 +117,11 @@ func (c *CardLeader) Play(p *Player, target Card) {
 }
 
 func (c *CardLeader) PlayOnRow(p *Player, row CardRange) {
-	if c.IsAppliedOnRow() {
+	if c.AppliedOnRow() {
 		c.Cancel()
 
 		//Process various effects (by Type)
-		switch c.Effect {
+		switch c.LeaderEffect {
 		case LEADER_FX_PLAY_WEATHER_ANY:
 			if !c.PlayWeatherFromDeck(row, p) {
 				c.Ready()
@@ -138,15 +138,15 @@ func (c *CardLeader) Ready() {
 	c.CannotUse = false
 }
 
-func (c *CardLeader) GetFaction() CardFaction {
-	return c.Faction
+func (c *CardLeader) Faction() CardFaction {
+	return c.LeaderFaction
 }
 
-func (c *CardLeader) GetType() CardType {
+func (c *CardLeader) Type() CardType {
 	return TypeLeader
 }
 
-func (c *CardLeader) IsTargettable() bool {
+func (c *CardLeader) Targettable() bool {
 	//TODO: Treat by effect type
 	return false
 }

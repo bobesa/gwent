@@ -5,12 +5,12 @@ import "testing"
 func GenerateUnitCard(cardRange CardRange, cardPower int) *CardUnit {
 	return &CardUnit{
 		BasicCard: BasicCard{
-			Name: "Unit Card",
+			CardName: "Unit Card",
 		},
-		Type:  TypeBasic,
-		Range: cardRange,
-		Power: cardPower,
-		Hero:  false,
+		UnitType:  TypeBasic,
+		UnitRange: cardRange,
+		UnitPower: cardPower,
+		UnitHero:  false,
 	}
 }
 

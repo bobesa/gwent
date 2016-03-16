@@ -9,7 +9,7 @@ type Cards []Card
 func (deck Cards) Scorch(owner *Player, pwr int) (Cards, Cards) {
 	cards, destroyed := Cards{}, Cards{}
 	for _, card := range deck {
-		if !card.IsHero() && card.GetPower(owner) == pwr {
+		if !card.Hero() && card.Power(owner) == pwr {
 			destroyed = append(destroyed, card)
 		} else {
 			cards = append(cards, card)
@@ -29,7 +29,7 @@ func (deck Cards) Without(c Card) Cards {
 
 func (deck Cards) WithoutType(cardType CardType, cardRange CardRange) (Cards, Card) {
 	for i, card := range deck {
-		if card.GetType() == cardType && card.GetRange() == cardRange {
+		if card.Type() == cardType && card.Range() == cardRange {
 			return append(deck[:i], deck[i+1:]...), card
 		}
 	}
@@ -58,14 +58,15 @@ type Card interface {
 	Play(*Player, Card)
 	PlayOnRow(*Player, CardRange)
 	PutOnTable(*Player)
-	GetName() string
-	GetFaction() CardFaction
-	GetType() CardType
-	GetRange() CardRange
-	GetPower(*Player) int
-	IsHero() bool
-	IsAppliedOnRow() bool
-	IsTargettable() bool
+
+	Name() string
+	Faction() CardFaction
+	Type() CardType
+	Range() CardRange
+	Power(*Player) int
+	Hero() bool
+	AppliedOnRow() bool
+	Targettable() bool
 
 	//Guids
 	SetGUID(GUID)

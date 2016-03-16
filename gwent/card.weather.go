@@ -24,10 +24,10 @@ func (c *CardWeather) PutOnTable(p *Player) {
 	}
 }
 
-func (c *CardWeather) GetType() CardType {
+func (c *CardWeather) Type() CardType {
 	return TypeWeather
 }
 
-func (c *CardWeather) GetRange() CardRange {
+func (c *CardWeather) Range() CardRange {
 	return c.Target
 }

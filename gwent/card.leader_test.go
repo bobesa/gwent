@@ -5,13 +5,13 @@ import "testing"
 func TestLeaderCards_HornClose(t *testing.T) {
 	//Prepare players & cards
 	p1, p2 := MakePlayer("test 1", FactionNorthernRealms, GenerateDeckWithUnitCards(RangeSiege, 5, 30)), MakePlayer("test 2", FactionMonsters, GenerateDeckWithUnitCards(RangeClose, 5, 30))
-	p1.Leader = &CardLeader{Effect: LEADER_FX_HORN_SIEGE}
+	p1.Leader = &CardLeader{LeaderEffect: LEADER_FX_HORN_SIEGE}
 
 	//Create & reset game
 	g := MakeGame(p1, p2)
 
 	//Check "Horn on Siege units"
-	p1.Leader.Effect = LEADER_FX_HORN_SIEGE
+	p1.Leader.LeaderEffect = LEADER_FX_HORN_SIEGE
 	p1.Play(p1.Hand[0], nil)
 	if p1.ComputePower() != 5 {
 		t.Error("Combat power should NOT be doubled before siege horn leader power is used")
@@ -28,13 +28,13 @@ func TestLeaderCards_HornClose(t *testing.T) {
 func TestLeaderCards_HornRanged(t *testing.T) {
 	//Prepare players & cards
 	p1, p2 := MakePlayer("test 1", FactionNorthernRealms, GenerateDeckWithUnitCards(RangeRanged, 5, 30)), MakePlayer("test 2", FactionMonsters, GenerateDeckWithUnitCards(RangeClose, 5, 30))
-	p1.Leader = &CardLeader{Effect: LEADER_FX_HORN_RANGED}
+	p1.Leader = &CardLeader{LeaderEffect: LEADER_FX_HORN_RANGED}
 
 	//Create & reset game
 	g := MakeGame(p1, p2)
 
 	//Check "Horn on Ranged units"
-	p1.Leader.Effect = LEADER_FX_HORN_RANGED
+	p1.Leader.LeaderEffect = LEADER_FX_HORN_RANGED
 	p1.Play(p1.Hand[0], nil)
 	if p1.ComputePower() != 5 {
 		t.Error("Combat power should NOT be doubled before ranged horn leader power is used")
@@ -51,13 +51,13 @@ func TestLeaderCards_HornRanged(t *testing.T) {
 func TestLeaderCards_HornSiege(t *testing.T) {
 	//Prepare players & cards
 	p1, p2 := MakePlayer("test 1", FactionNorthernRealms, GenerateDeckWithUnitCards(RangeClose, 5, 30)), MakePlayer("test 2", FactionMonsters, GenerateDeckWithUnitCards(RangeClose, 5, 30))
-	p1.Leader = &CardLeader{Effect: LEADER_FX_HORN_CLOSE}
+	p1.Leader = &CardLeader{LeaderEffect: LEADER_FX_HORN_CLOSE}
 
 	//Create & reset game
 	g := MakeGame(p1, p2)
 
 	//Check "Horn on Close units"
-	p1.Leader.Effect = LEADER_FX_HORN_CLOSE
+	p1.Leader.LeaderEffect = LEADER_FX_HORN_CLOSE
 	p1.Play(p1.Hand[0], nil)
 	if p1.ComputePower() != 5 {
 		t.Error("Combat power should NOT be doubled before close horn leader power is used")
@@ -74,14 +74,14 @@ func TestLeaderCards_HornSiege(t *testing.T) {
 func TestLeaderCards_WeatherClear(t *testing.T) {
 	//Prepare players & cards
 	p1, p2 := MakePlayer("test 1", FactionNorthernRealms, GenerateDeckWithUnitCards(RangeClose, 5, 30)), MakePlayer("test 2", FactionMonsters, GenerateDeckWithUnitCards(RangeClose, 5, 30))
-	p1.Leader = &CardLeader{Effect: LEADER_FX_HORN_CLOSE}
+	p1.Leader = &CardLeader{LeaderEffect: LEADER_FX_HORN_CLOSE}
 
 	//Create & reset game
 	g := MakeGame(p1, p2)
 
 	//Check
 	weatherCardClose, weatherCardRanged := &CardWeather{Target: RangeClose}, &CardWeather{Target: RangeRanged}
-	p1.Leader.Effect = LEADER_FX_WEATHER_CLEAR
+	p1.Leader.LeaderEffect = LEADER_FX_WEATHER_CLEAR
 	p1.GiveCard(weatherCardClose)
 	p1.GiveCard(weatherCardRanged)
 	p1.Play(weatherCardClose, nil)
@@ -104,7 +104,7 @@ func TestLeaderCards_WeatherClear(t *testing.T) {
 func TestLeaderCards_WeatherClose(t *testing.T) {
 	//Prepare players & cards
 	p1, p2 := MakePlayer("test 1", FactionNorthernRealms, GenerateDeckWithUnitCards(RangeClose, 5, 30)), MakePlayer("test 2", FactionMonsters, GenerateDeckWithUnitCards(RangeClose, 5, 30))
-	p1.Leader = &CardLeader{Effect: LEADER_FX_PLAY_WEATHER_CLOSE}
+	p1.Leader = &CardLeader{LeaderEffect: LEADER_FX_PLAY_WEATHER_CLOSE}
 
 	//Create & reset game
 	g := MakeGame(p1, p2)
@@ -139,7 +139,7 @@ func TestLeaderCards_WeatherClose(t *testing.T) {
 func TestLeaderCards_WeatherRanged(t *testing.T) {
 	//Prepare players & cards
 	p1, p2 := MakePlayer("test 1", FactionNorthernRealms, GenerateDeckWithUnitCards(RangeRanged, 5, 30)), MakePlayer("test 2", FactionMonsters, GenerateDeckWithUnitCards(RangeClose, 5, 30))
-	p1.Leader = &CardLeader{Effect: LEADER_FX_PLAY_WEATHER_RANGED}
+	p1.Leader = &CardLeader{LeaderEffect: LEADER_FX_PLAY_WEATHER_RANGED}
 
 	//Create & reset game
 	g := MakeGame(p1, p2)
@@ -174,7 +174,7 @@ func TestLeaderCards_WeatherRanged(t *testing.T) {
 func TestLeaderCards_WeatherSiege(t *testing.T) {
 	//Prepare players & cards
 	p1, p2 := MakePlayer("test 1", FactionNorthernRealms, GenerateDeckWithUnitCards(RangeSiege, 5, 30)), MakePlayer("test 2", FactionMonsters, GenerateDeckWithUnitCards(RangeClose, 5, 30))
-	p1.Leader = &CardLeader{Effect: LEADER_FX_PLAY_WEATHER_SIEGE}
+	p1.Leader = &CardLeader{LeaderEffect: LEADER_FX_PLAY_WEATHER_SIEGE}
 
 	//Create & reset game
 	g := MakeGame(p1, p2)
@@ -209,7 +209,7 @@ func TestLeaderCards_WeatherSiege(t *testing.T) {
 func TestLeaderCards_DrawExtraCard(t *testing.T) {
 	//Prepare players & cards
 	p1, p2 := MakePlayer("test 1", FactionNorthernRealms, GenerateDeckWithUnitCards(RangeSiege, 5, 30)), MakePlayer("test 2", FactionMonsters, GenerateDeckWithUnitCards(RangeClose, 5, 30))
-	p1.Leader = &CardLeader{Effect: LEADER_FX_DRAW_EXTRA_CARD}
+	p1.Leader = &CardLeader{LeaderEffect: LEADER_FX_DRAW_EXTRA_CARD}
 
 	//Create & reset game
 	g := MakeGame(p1, p2)
@@ -226,7 +226,7 @@ func TestLeaderCards_DrawExtraCard(t *testing.T) {
 func TestLeaderCards_DestroyClose(t *testing.T) {
 	//Prepare players & cards
 	p1, p2 := MakePlayer("test 1", FactionNorthernRealms, GenerateDeckWithUnitCards(RangeSiege, 5, 30)), MakePlayer("test 2", FactionMonsters, GenerateDeckWithUnitCards(RangeClose, 5, 30))
-	p1.Leader = &CardLeader{Effect: LEADER_FX_DESTROY_CLOSE_10_PLUS}
+	p1.Leader = &CardLeader{LeaderEffect: LEADER_FX_DESTROY_CLOSE_10_PLUS}
 
 	//Create & reset game
 	g := MakeGame(p1, p2)
@@ -257,7 +257,7 @@ func TestLeaderCards_DestroyClose(t *testing.T) {
 func TestLeaderCards_DestroySiege(t *testing.T) {
 	//Prepare players & cards
 	p1, p2 := MakePlayer("test 1", FactionNorthernRealms, GenerateDeckWithUnitCards(RangeSiege, 5, 30)), MakePlayer("test 2", FactionMonsters, GenerateDeckWithUnitCards(RangeSiege, 5, 30))
-	p1.Leader = &CardLeader{Effect: LEADER_FX_DESTROY_SIEGE_10_PLUS}
+	p1.Leader = &CardLeader{LeaderEffect: LEADER_FX_DESTROY_SIEGE_10_PLUS}
 
 	//Create & reset game
 	g := MakeGame(p1, p2)

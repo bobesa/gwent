@@ -87,7 +87,7 @@ func (p *Player) Scorch() {
 	table = append(table, p.RowRanged...)
 	table = append(table, p.RowSiege...)
 	for _, c := range table {
-		pwr := c.GetPower(p)
+		pwr := c.Power(p)
 		if pwr > maxPower {
 			maxPower = pwr
 		}
@@ -97,7 +97,7 @@ func (p *Player) Scorch() {
 	table = append(table, p.OtherPlayer().RowRanged...)
 	table = append(table, p.OtherPlayer().RowSiege...)
 	for _, c := range table {
-		pwr := c.GetPower(p.OtherPlayer())
+		pwr := c.Power(p.OtherPlayer())
 		if pwr > maxPower {
 			maxPower = pwr
 		}
@@ -132,7 +132,7 @@ func (p *Player) ComputePower() int {
 
 	//Compute power of each card
 	for _, card := range table {
-		pwr += card.GetPower(p)
+		pwr += card.Power(p)
 	}
 
 	return pwr
@@ -154,7 +154,7 @@ func (p *Player) ComputePowerOfRow(row CardRange) int {
 
 	//Compute power of each card
 	for _, card := range table {
-		pwr += card.GetPower(p)
+		pwr += card.Power(p)
 	}
 
 	return pwr
@@ -253,7 +253,7 @@ func (p *Player) Reset() {
 	}
 
 	//Check for Leader-related effects
-	if p.Leader != nil && p.Leader.Effect == LEADER_FX_DRAW_EXTRA_CARD {
+	if p.Leader != nil && p.Leader.LeaderEffect == LEADER_FX_DRAW_EXTRA_CARD {
 		p.Leader.Play(p, nil)
 	}
 }
