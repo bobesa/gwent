@@ -1,7 +1,7 @@
 package gwent
 
 type CardWeather struct {
-	Target int
+	Target CardRange
 
 	BasicCard
 }
@@ -24,10 +24,10 @@ func (c *CardWeather) PutOnTable(p *Player) {
 	}
 }
 
-func (c *CardWeather) GetType() int {
+func (c *CardWeather) GetType() CardType {
 	return TypeWeather
 }
 
-func (c *CardWeather) GetRange() int {
+func (c *CardWeather) GetRange() CardRange {
 	return c.Target
 }

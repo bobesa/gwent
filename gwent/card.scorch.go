@@ -11,6 +11,6 @@ func (c *CardScorch) Play(p *Player, target Card) {
 	p.Scorch()
 }
 
-func (c *CardScorch) GetType() int {
+func (c *CardScorch) GetType() CardType {
 	return TypeScorch
 }

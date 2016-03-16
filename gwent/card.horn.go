@@ -4,7 +4,7 @@ type CardHorn struct {
 	BasicCard
 }
 
-func (c *CardHorn) PlayOnRow(p *Player, row int) {	
+func (c *CardHorn) PlayOnRow(p *Player, row CardRange) {
 	//Apply horn
 	switch(row){
 	case RangeClose:
@@ -16,7 +16,7 @@ func (c *CardHorn) PlayOnRow(p *Player, row int) {
 	}
 }
 
-func (c *CardHorn) GetType() int {
+func (c *CardHorn) GetType() CardType {
 	return TypeHorn
 }
 

@@ -1,13 +1,5 @@
 package gwent
 
-const (
-	FactionNeutral = iota
-	FactionNilfgaard //Wins any round ending in draw
-	FactionNorthernRealms //Grants an extra card upon winning round
-	FactionMonsters //Keeps random Unit Card out after each round
-	FactionScoiatael //Decides who takes first turn
-)
-
 func MakeGame(p1 *Player, p2 *Player) (*Game) {		
 	//Setup game
 	g := &Game{

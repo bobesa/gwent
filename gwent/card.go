@@ -4,19 +4,6 @@ import (
 	"math/rand"
 )
 
-const (
-	RangeNone = iota
-	RangeClose
-	RangeRanged
-	RangeSiege
-	
-	TypeBasic = iota
-	TypeHorn
-	TypeScorch
-	TypeWeather
-	TypeLeader
-)
-
 type Cards []Card
 
 func (deck Cards) Scorch(owner *Player, pwr int) (Cards, Cards) {
@@ -40,7 +27,7 @@ func (deck Cards) Without(c Card) Cards {
 	return deck
 }
 
-func (deck Cards) WithoutType(cardType, cardRange int) (Cards, Card) {
+func (deck Cards) WithoutType(cardType CardType, cardRange CardRange) (Cards, Card) {
 	for i, card := range deck {
 		if card.GetType() == cardType && card.GetRange() == cardRange {
 			return append(deck[:i], deck[i+1:]...), card
@@ -69,12 +56,12 @@ func (deck Cards) Has(card Card) bool {
 
 type Card interface {
 	Play(*Player, Card)
-	PlayOnRow(*Player, int)
+	PlayOnRow(*Player, CardRange)
 	PutOnTable(*Player)
 	GetName() string
-	GetFaction() int
-	GetType() int
-	GetRange() int
+	GetFaction() CardFaction
+	GetType() CardType
+	GetRange() CardRange
 	GetPower(*Player) int
 	IsHero() bool
 	IsAppliedOnRow() bool

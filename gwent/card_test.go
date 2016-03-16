@@ -2,7 +2,7 @@ package gwent
 
 import "testing"
 
-func GenerateUnitCard(cardRange, cardPower int) (*CardUnit) {
+func GenerateUnitCard(cardRange CardRange, cardPower int) (*CardUnit) {
 	return &CardUnit{
 		BasicCard: BasicCard{
 			Name: "Unit Card",
@@ -14,7 +14,7 @@ func GenerateUnitCard(cardRange, cardPower int) (*CardUnit) {
 	}
 }
 
-func GenerateDeckWithUnitCards(cardRange, cardPower, count int) (Cards) {
+func GenerateDeckWithUnitCards(cardRange CardRange, cardPower, count int) (Cards) {
 	cards := Cards{}
 	for i := 0; i < count; i++ {
 		cards = append(cards, GenerateUnitCard(cardRange, cardPower))

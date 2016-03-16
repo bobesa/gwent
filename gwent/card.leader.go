@@ -30,12 +30,13 @@ const (
 
 type CardLeader struct {
 	CannotUse bool
-	Effect, Faction int
+	Effect int
+	Faction CardFaction
 
 	BasicCard
 }
 
-func (c *CardLeader) PlayWeatherFromDeck(where int, p *Player) bool {
+func (c *CardLeader) PlayWeatherFromDeck(where CardRange, p *Player) bool {
 	var card Card
 	p.Deck, card = p.Deck.WithoutType(TypeWeather, where)
 	if card != nil {		
@@ -115,7 +116,7 @@ func (c *CardLeader) Play(p *Player, target Card) {
 	}
 }
 
-func (c *CardLeader) PlayOnRow(p *Player, row int) {
+func (c *CardLeader) PlayOnRow(p *Player, row CardRange) {
 	if c.IsAppliedOnRow() {
 		c.Cancel()
 		
@@ -137,11 +138,11 @@ func (c *CardLeader) Ready() {
 	c.CannotUse = false
 }
 
-func (c *CardLeader) GetFaction() int {
+func (c *CardLeader) GetFaction() CardFaction {
 	return c.Faction
 }
 
-func (c *CardLeader) GetType() int {
+func (c *CardLeader) GetType() CardType {
 	return TypeLeader
 }
 

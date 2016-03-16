@@ -4,7 +4,7 @@ import (
 	"math/rand"
 )
 
-func MakePlayer(name string, faction int, cards Cards) (*Player) {
+func MakePlayer(name string, faction CardFaction, cards Cards) (*Player) {
 	return &Player{
 		Name: name,
 		Faction: faction,
@@ -25,7 +25,7 @@ func MakePlayer(name string, faction int, cards Cards) (*Player) {
 type Player struct {
 	Name string
 	Lifes int
-	Faction int
+	Faction CardFaction
 	Leader *CardLeader
 	Cards Cards
 	Game *Game
@@ -51,7 +51,7 @@ func (p *Player) Play(card Card, target Card) {
 	p.Hand = p.Hand.Without(card)
 }
 
-func (p *Player) PlayOnRow(card Card, target int) {
+func (p *Player) PlayOnRow(card Card, target CardRange) {
 	card.PlayOnRow(p, target)
 	p.Hand = p.Hand.Without(card)
 }
@@ -62,13 +62,13 @@ func (p *Player) PlayLeader(target Card) {
 	}
 }
 
-func (p *Player) PlayLeaderOnRow(target int) {
+func (p *Player) PlayLeaderOnRow(target CardRange) {
 	if p.Leader != nil && !p.Leader.CannotUse {
 		p.Leader.PlayOnRow(p, target)
 	}
 }
 
-func (p *Player) Horn(where int) {
+func (p *Player) Horn(where CardRange) {
 	switch(where){
 	case RangeClose:
 		p.HornClose = true
@@ -138,7 +138,7 @@ func (p *Player) ComputePower() int {
 	return pwr
 }
 
-func (p *Player) ComputePowerOfRow(row int) int {
+func (p *Player) ComputePowerOfRow(row CardRange) int {
 	pwr := 0
 	
 	//Get all cards on particular table row

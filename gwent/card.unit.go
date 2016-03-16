@@ -5,7 +5,11 @@ const (
 )
 
 type CardUnit struct {
-	Type, Power, Range, Ability, Faction int
+	Type CardType
+	Range CardRange
+	Faction CardFaction
+
+	Power, Ability int
 	Hero bool
 
 	BasicCard
@@ -27,15 +31,15 @@ func (c *CardUnit) PutOnTable(p *Player) {
 	}
 }
 
-func (c *CardUnit) GetType() int {
+func (c *CardUnit) GetType() CardType {
 	return c.Type
 }
 
-func (c *CardUnit) GetFaction() int {
+func (c *CardUnit) GetFaction() CardFaction {
 	return c.Faction
 }
 
-func (c *CardUnit) GetRange() int {
+func (c *CardUnit) GetRange() CardRange {
 	return c.Range
 }
 

@@ -9,7 +9,7 @@ type BasicCard struct {
 func (c BasicCard) Play(p *Player, target Card) {
 }
 
-func (c BasicCard) PlayOnRow(p *Player, row int) {
+func (c BasicCard) PlayOnRow(p *Player, row CardRange) {
 }
 
 func (c BasicCard) PutOnTable(p *Player) {
@@ -27,15 +27,15 @@ func (c BasicCard) GetName() string {
 	return c.Name
 }
 
-func (c BasicCard) GetFaction() int {
+func (c BasicCard) GetFaction() CardFaction {
 	return FactionNeutral
 }
 
-func (c BasicCard) GetType() int {
+func (c BasicCard) GetType() CardType {
 	return TypeBasic
 }
 
-func (c BasicCard) GetRange() int {
+func (c BasicCard) GetRange() CardRange {
 	return RangeNone
 }
 

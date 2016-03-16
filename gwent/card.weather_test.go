@@ -6,7 +6,7 @@ func TestWeatherCards(t *testing.T) {
 	//Generate weather deck
 	deck := Cards{}
 	for i := 0; i < 10; i++ {
-		deck = append(deck, &CardWeather{Target:RangeClose + (i%3)})
+		deck = append(deck, &CardWeather{Target:RangeClose + CardRange(i%3)})
 	}
 	
 	//Prepare players & cards

@@ -21,7 +21,7 @@ func GetUnitAbilityByName(name string) int {
 	return AbilityNone
 }
 
-func GetFactionByName(name string) int {
+func GetFactionByName(name string) CardFaction {
 	switch(name){
 	case "nilfgaard":
 		return FactionNilfgaard

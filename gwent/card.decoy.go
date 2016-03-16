@@ -1,7 +1,7 @@
 package gwent
 
 type CardDecoy struct {
-	Row int `json:"row"`
+	Row CardRange `json:"row"`
 
 	BasicCard
 }
@@ -29,11 +29,11 @@ func (c *CardDecoy) PutOnTable(p *Player) {
 	}
 }
 
-func (c *CardDecoy) GetType() int {
+func (c *CardDecoy) GetType() CardType {
 	return TypeHorn
 }
 
-func (c *CardDecoy) GetRange() int {
+func (c *CardDecoy) GetRange() CardRange {
 	return c.Row
 }
 
