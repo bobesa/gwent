@@ -4,13 +4,13 @@ import "testing"
 
 func TestUnitCards(t *testing.T) {	
 	//Prepare players & cards
-	p1, p2 := MakePlayer("test 1", FACTION_NORTHERN_REALMS, GenerateDeckWithUnitCards(RANGE_CLOSE,5,30)), MakePlayer("test 2", FACTION_MONSTERS, GenerateDeckWithUnitCards(RANGE_CLOSE,5,30))
+	p1, p2 := MakePlayer("test 1", FactionNorthernRealms, GenerateDeckWithUnitCards(RangeClose,5,30)), MakePlayer("test 2", FactionMonsters, GenerateDeckWithUnitCards(RangeClose,5,30))
 	
 	//Create & reset game
 	g := MakeGame(p1, p2)
 	
 	//Play unit card
-	card := &CardUnit{ Hero:false, Power: 5, Range: RANGE_CLOSE }
+	card := &CardUnit{ Hero:false, Power: 5, Range: RangeClose }
 	p1.GiveCard(card)
 	p1.Play(card, nil)
 	

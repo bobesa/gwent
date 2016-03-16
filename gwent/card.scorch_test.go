@@ -10,7 +10,7 @@ func TestScorchCards(t *testing.T) {
 	}
 	
 	//Prepare players & cards
-	p1, p2 := MakePlayer("test 1", FACTION_NORTHERN_REALMS, deck), MakePlayer("test 2", FACTION_MONSTERS, GenerateDeckWithUnitCards(RANGE_CLOSE,5,30))
+	p1, p2 := MakePlayer("test 1", FactionNorthernRealms, deck), MakePlayer("test 2", FactionMonsters, GenerateDeckWithUnitCards(RangeClose,5,30))
 	
 	//Create & reset game
 	g := MakeGame(p1, p2)

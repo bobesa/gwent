@@ -1,10 +1,9 @@
 package gwent
 
 type CardDecoy struct {
-	Name string `json:"name"`
-	Description string `json:"description"`
 	Row int `json:"row"`
-	Guid GUID `json:"guid"`
+
+	BasicCard
 }
 
 func (c *CardDecoy) Play(p *Player, target Card) {
@@ -18,57 +17,26 @@ func (c *CardDecoy) Play(p *Player, target Card) {
 	}
 }
 
-func (c *CardDecoy) PlayOnRow(p *Player, row int) {	
-}
-
 func (c *CardDecoy) PutOnTable(p *Player) {
 	//Add card to proper row
 	switch(c.GetRange()) {
-		case RANGE_CLOSE:
+		case RangeClose:
 			p.RowClose = append(p.RowClose, c)
-		case RANGE_RANGED:
+		case RangeRanged:
 			p.RowRanged = append(p.RowRanged, c)
-		case RANGE_SIEGE:
+		case RangeSiege:
 			p.RowSiege = append(p.RowSiege, c)
 	}
 }
 
-func (c *CardDecoy) SetGUID(g GUID) {
-	c.Guid = g
-}
-	
-func (c *CardDecoy) GetGUID() GUID {
-	return c.Guid
-}
-
-func (c *CardDecoy) GetName() string {
-	return c.Name
-}
-
-func (c *CardDecoy) GetFaction() int {
-	return FACTION_NEUTRAL
-}
-
 func (c *CardDecoy) GetType() int {
-	return TYPE_HORN
+	return TypeHorn
 }
 
 func (c *CardDecoy) GetRange() int {
 	return c.Row
 }
 
-func (c *CardDecoy) GetPower(*Player) int {
-	return 0
-}
-
-func (c *CardDecoy) IsHero() bool {
-	return false	
-}
-
-func (c *CardDecoy) IsAppliedOnRow() bool {
-	return false
-}
-
-func (c *CardDecoy) IsTargetable() bool {
+func (c *CardDecoy) IsTargettable() bool {
 	return true
 }

@@ -4,7 +4,7 @@ import "testing"
 
 func TestHornDecoy(t *testing.T) {	
 	//Prepare players & cards
-	p1, p2 := MakePlayer("test 1", FACTION_NORTHERN_REALMS, GenerateDeckWithUnitCards(RANGE_CLOSE,5,10)), MakePlayer("test 2", FACTION_MONSTERS, GenerateDeckWithUnitCards(RANGE_CLOSE,5,10))
+	p1, p2 := MakePlayer("test 1", FactionNorthernRealms, GenerateDeckWithUnitCards(RangeClose,5,10)), MakePlayer("test 2", FactionMonsters, GenerateDeckWithUnitCards(RangeClose,5,10))
 	
 	//Create & reset game
 	g := MakeGame(p1, p2)

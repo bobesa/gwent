@@ -70,11 +70,11 @@ func (p *Player) PlayLeaderOnRow(target int) {
 
 func (p *Player) Horn(where int) {
 	switch(where){
-	case RANGE_CLOSE:
+	case RangeClose:
 		p.HornClose = true
-	case RANGE_RANGED:
+	case RangeRanged:
 		p.HornRanged = true
-	case RANGE_SIEGE:
+	case RangeSiege:
 		p.HornSiege = true
 	}
 }
@@ -144,11 +144,11 @@ func (p *Player) ComputePowerOfRow(row int) int {
 	//Get all cards on particular table row
 	var table Cards
 	switch(row){
-	case RANGE_CLOSE:
+	case RangeClose:
 		table = p.RowClose
-	case RANGE_RANGED:
+	case RangeRanged:
 		table = p.RowRanged
-	case RANGE_SIEGE:
+	case RangeSiege:
 		table = p.RowSiege
 	}
 	
@@ -185,7 +185,7 @@ func (p *Player) Lost() {
 func (p *Player) ResetRows() {
 	//Faction related effects
 	var monsterCard Card
-	if p.Faction == FACTION_MONSTERS {
+	if p.Faction == FactionMonsters {
 		if len(p.RowClose) > 0 {
 			p.RowClose, monsterCard = p.RowClose.WithoutRandom()
 		} else if len(p.RowRanged) > 0 {
@@ -206,9 +206,9 @@ func (p *Player) ResetRows() {
 	p.RowSiege = make(Cards,0)	
 	
 	//Faction related post-effects
-	if p.Faction == FACTION_MONSTERS && monsterCard != nil {
+	if p.Faction == FactionMonsters && monsterCard != nil {
 		monsterCard.PutOnTable(p)
-	} else if p.Faction == FACTION_NORTHERN_REALMS && p.Game.LastRoundWinner == p {
+	} else if p.Faction == FactionNorthernRealms && p.Game.LastRoundWinner == p {
 		p.DrawCard()
 	}	
 	

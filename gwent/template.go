@@ -18,21 +18,21 @@ func GetLeaderEffectByName(name string) int {
 }
 
 func GetUnitAbilityByName(name string) int {
-	return ABILITY_NONE
+	return AbilityNone
 }
 
 func GetFactionByName(name string) int {
 	switch(name){
 	case "nilfgaard":
-		return FACTION_NILFGAARD
+		return FactionNilfgaard
 	case "northern_realms":
-		return FACTION_NORTHERN_REALMS
+		return FactionNorthernRealms
 	case "monsters":
-		return FACTION_MONSTERS
+		return FactionMonsters
 	case "scoiatael":
-		return FACTION_SCOIATAEL
+		return FactionScoiatael
 	default:		
-		return FACTION_NEUTRAL
+		return FactionNeutral
 	}
 }
 
@@ -40,9 +40,11 @@ func (t CardTemplate) Make() Card {
 	switch(t.Type) {
 	case "leader":
 		return &CardLeader{
-			Name: t.Name,
+			BasicCard: BasicCard{
+				Name: t.Name,
+				Description: t.Description,
+			},
 			Faction: GetFactionByName(t.Faction),
-			Description: t.Description,
 			Effect: GetLeaderEffectByName(t.Ability),
 		}	
 	}

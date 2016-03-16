@@ -29,15 +29,15 @@ const (
 )
 
 type CardLeader struct {
-	Name, Description string
 	CannotUse bool
 	Effect, Faction int
-	Guid GUID
+
+	BasicCard
 }
 
 func (c *CardLeader) PlayWeatherFromDeck(where int, p *Player) bool {
 	var card Card
-	p.Deck, card = p.Deck.WithoutType(TYPE_WEATHER, where)
+	p.Deck, card = p.Deck.WithoutType(TypeWeather, where)
 	if card != nil {		
 		card.Play(p, nil) //Cast card
 		return true
@@ -65,7 +65,7 @@ func (c *CardLeader) Play(p *Player, target Card) {
 			
 		//Destroy
 		case LEADER_FX_DESTROY_CLOSE_10_PLUS:
-			if p.OtherPlayer().ComputePowerOfRow(RANGE_CLOSE) >= 10 {
+			if p.OtherPlayer().ComputePowerOfRow(RangeClose) >= 10 {
 				maxPwr := 0
 				for _, card := range p.OtherPlayer().RowClose {
 					cardPower := card.GetPower(p.OtherPlayer()) 
@@ -77,7 +77,7 @@ func (c *CardLeader) Play(p *Player, target Card) {
 			}
 			
 		case LEADER_FX_DESTROY_SIEGE_10_PLUS:
-			if p.OtherPlayer().ComputePowerOfRow(RANGE_SIEGE) >= 10 {
+			if p.OtherPlayer().ComputePowerOfRow(RangeSiege) >= 10 {
 				maxPwr := 0
 				for _, card := range p.OtherPlayer().RowSiege {
 					cardPower := card.GetPower(p.OtherPlayer()) 
@@ -90,15 +90,15 @@ func (c *CardLeader) Play(p *Player, target Card) {
 						
 		//Weather
 		case LEADER_FX_PLAY_WEATHER_CLOSE:
-			if !c.PlayWeatherFromDeck(RANGE_CLOSE, p) {
+			if !c.PlayWeatherFromDeck(RangeClose, p) {
 				c.Ready()
 			}
 		case LEADER_FX_PLAY_WEATHER_RANGED:
-			if !c.PlayWeatherFromDeck(RANGE_RANGED, p) {
+			if !c.PlayWeatherFromDeck(RangeRanged, p) {
 				c.Ready()
 			}
 		case LEADER_FX_PLAY_WEATHER_SIEGE:
-			if !c.PlayWeatherFromDeck(RANGE_SIEGE, p) {
+			if !c.PlayWeatherFromDeck(RangeSiege, p) {
 				c.Ready()
 			}
 		case LEADER_FX_WEATHER_CLEAR:
@@ -129,17 +129,6 @@ func (c *CardLeader) PlayOnRow(p *Player, row int) {
 	}	
 }
 
-func (c *CardLeader) PutOnTable(p *Player) {
-}
-
-func (c *CardLeader) SetGUID(g GUID) {
-	c.Guid = g
-}
-	
-func (c *CardLeader) GetGUID() GUID {
-	return c.Guid
-}
-
 func (c *CardLeader) Cancel() {
 	c.CannotUse = true
 }
@@ -148,35 +137,15 @@ func (c *CardLeader) Ready() {
 	c.CannotUse = false
 }
 
-func (c *CardLeader) GetName() string {
-	return c.Name
-}
-
 func (c *CardLeader) GetFaction() int {
 	return c.Faction
 }
 
 func (c *CardLeader) GetType() int {
-	return TYPE_LEADER
+	return TypeLeader
 }
 
-func (c *CardLeader) GetRange() int {
-	return RANGE_NONE
-}
-
-func (c *CardLeader) GetPower(*Player) int {
-	return 0
-}
-
-func (c *CardLeader) IsHero() bool {
-	return false	
-}
-
-func (c *CardLeader) IsAppliedOnRow() bool {
-	return false
-}
-
-func (c *CardLeader) IsTargetable() bool {
+func (c *CardLeader) IsTargettable() bool {
 	//TODO: Treat by effect type
 	return false
 }

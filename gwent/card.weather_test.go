@@ -6,11 +6,11 @@ func TestWeatherCards(t *testing.T) {
 	//Generate weather deck
 	deck := Cards{}
 	for i := 0; i < 10; i++ {
-		deck = append(deck, &CardWeather{Target:RANGE_CLOSE + (i%3)})
+		deck = append(deck, &CardWeather{Target:RangeClose + (i%3)})
 	}
 	
 	//Prepare players & cards
-	p1, p2 := MakePlayer("test 1", FACTION_NORTHERN_REALMS, deck), MakePlayer("test 2", FACTION_MONSTERS, GenerateDeckWithUnitCards(RANGE_CLOSE,5,30))
+	p1, p2 := MakePlayer("test 1", FactionNorthernRealms, deck), MakePlayer("test 2", FactionMonsters, GenerateDeckWithUnitCards(RangeClose,5,30))
 	
 	//Create & reset game
 	g := MakeGame(p1, p2)
@@ -26,7 +26,7 @@ func TestWeatherCards(t *testing.T) {
 	}
 	
 	//Give clear weather card & play it
-	p1.GiveCard(&CardWeather{Target:RANGE_NONE})
+	p1.GiveCard(&CardWeather{Target:RangeNone})
 	p1.Play(p1.Hand[0],nil);
 	
 	//Check that all weather are clear
@@ -35,7 +35,7 @@ func TestWeatherCards(t *testing.T) {
 	}
 	
 	//Give weather card, play it & pass both players
-	p1.GiveCard(&CardWeather{Target:RANGE_CLOSE})
+	p1.GiveCard(&CardWeather{Target:RangeClose})
 	p1.Play(p1.Hand[0],nil); //Apply weather
 	p1.Pass()
 	p2.Pass()

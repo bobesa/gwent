@@ -1,11 +1,11 @@
 package gwent
 
 const (
-	FACTION_NEUTRAL = iota
-	FACTION_NILFGAARD //Wins any round ending in draw
-	FACTION_NORTHERN_REALMS //Grants an extra card upon winning round
-	FACTION_MONSTERS //Keeps random Unit Card out after each round
-	FACTION_SCOIATAEL //Decides who takes first turn
+	FactionNeutral = iota
+	FactionNilfgaard //Wins any round ending in draw
+	FactionNorthernRealms //Grants an extra card upon winning round
+	FactionMonsters //Keeps random Unit Card out after each round
+	FactionScoiatael //Decides who takes first turn
 )
 
 func MakeGame(p1 *Player, p2 *Player) (*Game) {		
@@ -115,10 +115,10 @@ func (g *Game) Next() {
 			g.Player1.Lost()
 		} else {
 			//Tie
-			if g.Player1.Faction == FACTION_NILFGAARD && g.Player2.Faction != FACTION_NILFGAARD {
+			if g.Player1.Faction == FactionNilfgaard && g.Player2.Faction != FactionNilfgaard {
 				//Player 1 is NILFGAARD
 				g.Player2.Lost()				
-			} else if g.Player1.Faction != FACTION_NILFGAARD && g.Player2.Faction == FACTION_NILFGAARD {
+			} else if g.Player1.Faction != FactionNilfgaard && g.Player2.Faction == FactionNilfgaard {
 				//Player 2 is NILFGAARD
 				g.Player1.Lost()				
 			} else {

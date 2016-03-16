@@ -7,7 +7,7 @@ func TestTemplateLeader(t *testing.T) {
 	
 	card := tmpl.Make()
 	
-	if card.GetType() != TYPE_LEADER {
+	if card.GetType() != TypeLeader {
 		t.Error("Card should be a leader card")
 	}
 }

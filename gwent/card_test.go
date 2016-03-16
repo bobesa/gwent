@@ -4,8 +4,10 @@ import "testing"
 
 func GenerateUnitCard(cardRange, cardPower int) (*CardUnit) {
 	return &CardUnit{
-		Name: "Unit Card",
-		Type: TYPE_BASIC,
+		BasicCard: BasicCard{
+			Name: "Unit Card",
+		},
+		Type: TypeBasic,
 		Range: cardRange,
 		Power: cardPower,
 		Hero: false,
@@ -22,7 +24,7 @@ func GenerateDeckWithUnitCards(cardRange, cardPower, count int) (Cards) {
 
 func TestCombatSimple(t *testing.T) {
 	//Prepare players & cards
-	p1, p2 := MakePlayer("test 1", FACTION_NILFGAARD, GenerateDeckWithUnitCards(RANGE_CLOSE,5,30)), MakePlayer("test 2", FACTION_NILFGAARD, GenerateDeckWithUnitCards(RANGE_CLOSE,5,30))
+	p1, p2 := MakePlayer("test 1", FactionNilfgaard, GenerateDeckWithUnitCards(RangeClose,5,30)), MakePlayer("test 2", FactionNilfgaard, GenerateDeckWithUnitCards(RangeClose,5,30))
 	
 	//Create & reset game
 	g := MakeGame(p1, p2)
@@ -49,7 +51,7 @@ func TestCombatSimple(t *testing.T) {
 
 func TestCombatDraw(t *testing.T) {
 	//Prepare players & cards
-	p1, p2 := MakePlayer("test 1", FACTION_NORTHERN_REALMS, GenerateDeckWithUnitCards(RANGE_CLOSE,5,30)), MakePlayer("test 2", FACTION_NORTHERN_REALMS, GenerateDeckWithUnitCards(RANGE_CLOSE,5,30))
+	p1, p2 := MakePlayer("test 1", FactionNorthernRealms, GenerateDeckWithUnitCards(RangeClose,5,30)), MakePlayer("test 2", FactionNorthernRealms, GenerateDeckWithUnitCards(RangeClose,5,30))
 	
 	//Create & reset game
 	g := MakeGame(p1, p2)
@@ -66,7 +68,7 @@ func TestCombatDraw(t *testing.T) {
 
 func TestFactionBonusNilfgaard(t *testing.T) {
 	//Prepare players & cards
-	p1, p2 := MakePlayer("test 1", FACTION_NILFGAARD, GenerateDeckWithUnitCards(RANGE_CLOSE,5,30)), MakePlayer("test 2", FACTION_NORTHERN_REALMS, GenerateDeckWithUnitCards(RANGE_CLOSE,5,30))
+	p1, p2 := MakePlayer("test 1", FactionNilfgaard, GenerateDeckWithUnitCards(RangeClose,5,30)), MakePlayer("test 2", FactionNorthernRealms, GenerateDeckWithUnitCards(RangeClose,5,30))
 	
 	//Create & reset game
 	g := MakeGame(p1, p2)
@@ -83,7 +85,7 @@ func TestFactionBonusNilfgaard(t *testing.T) {
 
 func TestFactionBonusMonsters(t *testing.T) {
 	//Prepare players & cards
-	p1, p2 := MakePlayer("test 1", FACTION_MONSTERS, GenerateDeckWithUnitCards(RANGE_CLOSE,5,30)), MakePlayer("test 2", FACTION_NORTHERN_REALMS, GenerateDeckWithUnitCards(RANGE_CLOSE,5,30))
+	p1, p2 := MakePlayer("test 1", FactionMonsters, GenerateDeckWithUnitCards(RangeClose,5,30)), MakePlayer("test 2", FactionNorthernRealms, GenerateDeckWithUnitCards(RangeClose,5,30))
 	
 	//Create & reset game
 	g := MakeGame(p1, p2)
@@ -103,7 +105,7 @@ func TestFactionBonusMonsters(t *testing.T) {
 
 func TestFactionBonusNorthernRealms(t *testing.T) {
 	//Prepare players & cards
-	p1, p2 := MakePlayer("test 1", FACTION_NORTHERN_REALMS, GenerateDeckWithUnitCards(RANGE_CLOSE,5,30)), MakePlayer("test 2", FACTION_MONSTERS, GenerateDeckWithUnitCards(RANGE_CLOSE,5,30))
+	p1, p2 := MakePlayer("test 1", FactionNorthernRealms, GenerateDeckWithUnitCards(RangeClose,5,30)), MakePlayer("test 2", FactionMonsters, GenerateDeckWithUnitCards(RangeClose,5,30))
 	
 	//Create & reset game
 	g := MakeGame(p1, p2)

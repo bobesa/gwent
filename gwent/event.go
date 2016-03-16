@@ -24,8 +24,8 @@ type Event struct {
 func MakeEvent(g *Game, card, target Card, eventType string, p *Player) Event {
 	e := Event{
 		Id: g.GetNextEventId(),
-		Card: card.GetGUID(),
-		Target: card.GetGUID(),
+		Card: card.GUID(),
+		Target: card.GUID(),
 		Type: eventType,
 			
 		game: g,	

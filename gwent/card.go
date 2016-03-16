@@ -5,16 +5,16 @@ import (
 )
 
 const (
-	RANGE_NONE = iota
-	RANGE_CLOSE
-	RANGE_RANGED
-	RANGE_SIEGE
+	RangeNone = iota
+	RangeClose
+	RangeRanged
+	RangeSiege
 	
-	TYPE_BASIC = iota
-	TYPE_HORN
-	TYPE_SCORCH
-	TYPE_WEATHER
-	TYPE_LEADER
+	TypeBasic = iota
+	TypeHorn
+	TypeScorch
+	TypeWeather
+	TypeLeader
 )
 
 type Cards []Card
@@ -78,9 +78,9 @@ type Card interface {
 	GetPower(*Player) int
 	IsHero() bool
 	IsAppliedOnRow() bool
-	IsTargetable() bool
+	IsTargettable() bool
 	
 	//Guids
 	SetGUID(GUID)
-	GetGUID() GUID
+	GUID() GUID
 }

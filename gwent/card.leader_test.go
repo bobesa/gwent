@@ -4,7 +4,7 @@ import "testing"
 
 func TestLeaderCards_HornClose(t *testing.T) {	
 	//Prepare players & cards
-	p1, p2 := MakePlayer("test 1", FACTION_NORTHERN_REALMS, GenerateDeckWithUnitCards(RANGE_SIEGE,5,30)), MakePlayer("test 2", FACTION_MONSTERS, GenerateDeckWithUnitCards(RANGE_CLOSE,5,30))
+	p1, p2 := MakePlayer("test 1", FactionNorthernRealms, GenerateDeckWithUnitCards(RangeSiege,5,30)), MakePlayer("test 2", FactionMonsters, GenerateDeckWithUnitCards(RangeClose,5,30))
 	p1.Leader = &CardLeader{Effect:	LEADER_FX_HORN_SIEGE}
 	
 	//Create & reset game
@@ -27,7 +27,7 @@ func TestLeaderCards_HornClose(t *testing.T) {
 
 func TestLeaderCards_HornRanged(t *testing.T) {	
 	//Prepare players & cards
-	p1, p2 := MakePlayer("test 1", FACTION_NORTHERN_REALMS, GenerateDeckWithUnitCards(RANGE_RANGED,5,30)), MakePlayer("test 2", FACTION_MONSTERS, GenerateDeckWithUnitCards(RANGE_CLOSE,5,30))
+	p1, p2 := MakePlayer("test 1", FactionNorthernRealms, GenerateDeckWithUnitCards(RangeRanged,5,30)), MakePlayer("test 2", FactionMonsters, GenerateDeckWithUnitCards(RangeClose,5,30))
 	p1.Leader = &CardLeader{Effect:	LEADER_FX_HORN_RANGED}
 	
 	//Create & reset game
@@ -50,7 +50,7 @@ func TestLeaderCards_HornRanged(t *testing.T) {
 
 func TestLeaderCards_HornSiege(t *testing.T) {	
 	//Prepare players & cards
-	p1, p2 := MakePlayer("test 1", FACTION_NORTHERN_REALMS, GenerateDeckWithUnitCards(RANGE_CLOSE,5,30)), MakePlayer("test 2", FACTION_MONSTERS, GenerateDeckWithUnitCards(RANGE_CLOSE,5,30))
+	p1, p2 := MakePlayer("test 1", FactionNorthernRealms, GenerateDeckWithUnitCards(RangeClose,5,30)), MakePlayer("test 2", FactionMonsters, GenerateDeckWithUnitCards(RangeClose,5,30))
 	p1.Leader = &CardLeader{Effect:	LEADER_FX_HORN_CLOSE}
 	
 	//Create & reset game
@@ -73,14 +73,14 @@ func TestLeaderCards_HornSiege(t *testing.T) {
 
 func TestLeaderCards_WeatherClear(t *testing.T) {	
 	//Prepare players & cards
-	p1, p2 := MakePlayer("test 1", FACTION_NORTHERN_REALMS, GenerateDeckWithUnitCards(RANGE_CLOSE,5,30)), MakePlayer("test 2", FACTION_MONSTERS, GenerateDeckWithUnitCards(RANGE_CLOSE,5,30))
+	p1, p2 := MakePlayer("test 1", FactionNorthernRealms, GenerateDeckWithUnitCards(RangeClose,5,30)), MakePlayer("test 2", FactionMonsters, GenerateDeckWithUnitCards(RangeClose,5,30))
 	p1.Leader = &CardLeader{Effect:	LEADER_FX_HORN_CLOSE}
 	
 	//Create & reset game
 	g := MakeGame(p1, p2)
 	
 	//Check
-	weatherCardClose, weatherCardRanged := &CardWeather{Target:RANGE_CLOSE}, &CardWeather{Target:RANGE_RANGED}
+	weatherCardClose, weatherCardRanged := &CardWeather{Target:RangeClose}, &CardWeather{Target:RangeRanged}
 	p1.Leader.Effect = LEADER_FX_WEATHER_CLEAR
 	p1.GiveCard(weatherCardClose)
 	p1.GiveCard(weatherCardRanged)
@@ -103,7 +103,7 @@ func TestLeaderCards_WeatherClear(t *testing.T) {
 
 func TestLeaderCards_WeatherClose(t *testing.T) {	
 	//Prepare players & cards
-	p1, p2 := MakePlayer("test 1", FACTION_NORTHERN_REALMS, GenerateDeckWithUnitCards(RANGE_CLOSE,5,30)), MakePlayer("test 2", FACTION_MONSTERS, GenerateDeckWithUnitCards(RANGE_CLOSE,5,30))
+	p1, p2 := MakePlayer("test 1", FactionNorthernRealms, GenerateDeckWithUnitCards(RangeClose,5,30)), MakePlayer("test 2", FactionMonsters, GenerateDeckWithUnitCards(RangeClose,5,30))
 	p1.Leader = &CardLeader{Effect:	LEADER_FX_PLAY_WEATHER_CLOSE}
 	
 	//Create & reset game
@@ -122,7 +122,7 @@ func TestLeaderCards_WeatherClose(t *testing.T) {
 	}
 	
 	//Give weather card & try again
-	p1.Deck = append(p1.Deck, &CardWeather{Target:RANGE_CLOSE})
+	p1.Deck = append(p1.Deck, &CardWeather{Target:RangeClose})
 	deckCount := len(p1.Deck)
 	p1.PlayLeader(nil)
 	if !p1.Game.WeatherClose {
@@ -138,7 +138,7 @@ func TestLeaderCards_WeatherClose(t *testing.T) {
 
 func TestLeaderCards_WeatherRanged(t *testing.T) {	
 	//Prepare players & cards
-	p1, p2 := MakePlayer("test 1", FACTION_NORTHERN_REALMS, GenerateDeckWithUnitCards(RANGE_RANGED,5,30)), MakePlayer("test 2", FACTION_MONSTERS, GenerateDeckWithUnitCards(RANGE_CLOSE,5,30))
+	p1, p2 := MakePlayer("test 1", FactionNorthernRealms, GenerateDeckWithUnitCards(RangeRanged,5,30)), MakePlayer("test 2", FactionMonsters, GenerateDeckWithUnitCards(RangeClose,5,30))
 	p1.Leader = &CardLeader{Effect:	LEADER_FX_PLAY_WEATHER_RANGED}
 	
 	//Create & reset game
@@ -157,7 +157,7 @@ func TestLeaderCards_WeatherRanged(t *testing.T) {
 	}
 	
 	//Give weather card & try again
-	p1.Deck = append(p1.Deck, &CardWeather{Target:RANGE_RANGED})
+	p1.Deck = append(p1.Deck, &CardWeather{Target:RangeRanged})
 	deckCount := len(p1.Deck)
 	p1.PlayLeader(nil)
 	if !p1.Game.WeatherRanged {
@@ -173,7 +173,7 @@ func TestLeaderCards_WeatherRanged(t *testing.T) {
 
 func TestLeaderCards_WeatherSiege(t *testing.T) {	
 	//Prepare players & cards
-	p1, p2 := MakePlayer("test 1", FACTION_NORTHERN_REALMS, GenerateDeckWithUnitCards(RANGE_SIEGE,5,30)), MakePlayer("test 2", FACTION_MONSTERS, GenerateDeckWithUnitCards(RANGE_CLOSE,5,30))
+	p1, p2 := MakePlayer("test 1", FactionNorthernRealms, GenerateDeckWithUnitCards(RangeSiege,5,30)), MakePlayer("test 2", FactionMonsters, GenerateDeckWithUnitCards(RangeClose,5,30))
 	p1.Leader = &CardLeader{Effect:	LEADER_FX_PLAY_WEATHER_SIEGE}
 	
 	//Create & reset game
@@ -192,7 +192,7 @@ func TestLeaderCards_WeatherSiege(t *testing.T) {
 	}
 	
 	//Give weather card & try again
-	p1.Deck = append(p1.Deck, &CardWeather{Target:RANGE_SIEGE})
+	p1.Deck = append(p1.Deck, &CardWeather{Target:RangeSiege})
 	deckCount := len(p1.Deck)
 	p1.PlayLeader(nil)
 	if !p1.Game.WeatherSiege {
@@ -208,7 +208,7 @@ func TestLeaderCards_WeatherSiege(t *testing.T) {
 
 func TestLeaderCards_DrawExtraCard(t *testing.T) {	
 	//Prepare players & cards
-	p1, p2 := MakePlayer("test 1", FACTION_NORTHERN_REALMS, GenerateDeckWithUnitCards(RANGE_SIEGE,5,30)), MakePlayer("test 2", FACTION_MONSTERS, GenerateDeckWithUnitCards(RANGE_CLOSE,5,30))
+	p1, p2 := MakePlayer("test 1", FactionNorthernRealms, GenerateDeckWithUnitCards(RangeSiege,5,30)), MakePlayer("test 2", FactionMonsters, GenerateDeckWithUnitCards(RangeClose,5,30))
 	p1.Leader = &CardLeader{Effect:	LEADER_FX_DRAW_EXTRA_CARD}
 	
 	//Create & reset game
@@ -225,14 +225,14 @@ func TestLeaderCards_DrawExtraCard(t *testing.T) {
 
 func TestLeaderCards_DestroyClose(t *testing.T) {	
 	//Prepare players & cards
-	p1, p2 := MakePlayer("test 1", FACTION_NORTHERN_REALMS, GenerateDeckWithUnitCards(RANGE_SIEGE,5,30)), MakePlayer("test 2", FACTION_MONSTERS, GenerateDeckWithUnitCards(RANGE_CLOSE,5,30))
+	p1, p2 := MakePlayer("test 1", FactionNorthernRealms, GenerateDeckWithUnitCards(RangeSiege,5,30)), MakePlayer("test 2", FactionMonsters, GenerateDeckWithUnitCards(RangeClose,5,30))
 	p1.Leader = &CardLeader{Effect:	LEADER_FX_DESTROY_CLOSE_10_PLUS}
 	
 	//Create & reset game
 	g := MakeGame(p1, p2)
 	
 	//Give player 2 special unit card to hand
-	specialCard, otherRowCard := GenerateUnitCard(RANGE_CLOSE,4), GenerateUnitCard(RANGE_RANGED,5)
+	specialCard, otherRowCard := GenerateUnitCard(RangeClose,4), GenerateUnitCard(RangeRanged,5)
 	p2.GiveCard(specialCard)
 	p2.GiveCard(otherRowCard)
 	p2.Play(specialCard, nil)
@@ -256,14 +256,14 @@ func TestLeaderCards_DestroyClose(t *testing.T) {
 
 func TestLeaderCards_DestroySiege(t *testing.T) {	
 	//Prepare players & cards
-	p1, p2 := MakePlayer("test 1", FACTION_NORTHERN_REALMS, GenerateDeckWithUnitCards(RANGE_SIEGE,5,30)), MakePlayer("test 2", FACTION_MONSTERS, GenerateDeckWithUnitCards(RANGE_SIEGE,5,30))
+	p1, p2 := MakePlayer("test 1", FactionNorthernRealms, GenerateDeckWithUnitCards(RangeSiege,5,30)), MakePlayer("test 2", FactionMonsters, GenerateDeckWithUnitCards(RangeSiege,5,30))
 	p1.Leader = &CardLeader{Effect:	LEADER_FX_DESTROY_SIEGE_10_PLUS}
 	
 	//Create & reset game
 	g := MakeGame(p1, p2)
 	
 	//Give player 2 special unit card to hand
-	specialCard, otherRowCard := GenerateUnitCard(RANGE_SIEGE,4), GenerateUnitCard(RANGE_CLOSE,5)
+	specialCard, otherRowCard := GenerateUnitCard(RangeSiege,4), GenerateUnitCard(RangeClose,5)
 	p2.GiveCard(specialCard)
 	p2.GiveCard(otherRowCard)
 	p2.Play(specialCard, nil)

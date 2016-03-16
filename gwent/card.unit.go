@@ -1,45 +1,30 @@
 package gwent
 
 const (
-	ABILITY_NONE = iota
+	AbilityNone = iota
 )
 
 type CardUnit struct {
-	Name, Description string
 	Type, Power, Range, Ability, Faction int
 	Hero bool
-	Guid GUID
+
+	BasicCard
 }
 
 func (c *CardUnit) Play(p *Player, target Card) {
 	c.PutOnTable(p)
 }
 
-func (c *CardUnit) PlayOnRow(p *Player, row int) {	
-}
-
 func (c *CardUnit) PutOnTable(p *Player) {
 	//Add card to proper row
 	switch(c.GetRange()) {
-		case RANGE_CLOSE:
+		case RangeClose:
 			p.RowClose = append(p.RowClose, c)
-		case RANGE_RANGED:
+		case RangeRanged:
 			p.RowRanged = append(p.RowRanged, c)
-		case RANGE_SIEGE:
+		case RangeSiege:
 			p.RowSiege = append(p.RowSiege, c)
 	}
-}
-
-func (c *CardUnit) SetGUID(g GUID) {
-	c.Guid = g
-}
-	
-func (c *CardUnit) GetGUID() GUID {
-	return c.Guid
-}
-
-func (c *CardUnit) GetName() string {
-	return c.Name
 }
 
 func (c *CardUnit) GetType() int {
@@ -59,16 +44,16 @@ func (c *CardUnit) GetPower(p *Player) int {
 		
 	//Apply weather if not a hero card
 	if !c.IsHero() && (
-		(c.GetRange() == RANGE_CLOSE && p.Game.WeatherClose) ||
-		(c.GetRange() == RANGE_RANGED && p.Game.WeatherRanged) ||
-		(c.GetRange() == RANGE_SIEGE && p.Game.WeatherSiege) ) {
+		(c.GetRange() == RangeClose && p.Game.WeatherClose) ||
+		(c.GetRange() == RangeRanged && p.Game.WeatherRanged) ||
+		(c.GetRange() == RangeSiege && p.Game.WeatherSiege) ) {
 		pwr = 1
 	}
 	
 	//Apply horn if available
-	if (c.GetRange() == RANGE_CLOSE && p.HornClose) ||
-		(c.GetRange() == RANGE_RANGED && p.HornRanged) ||
-		(c.GetRange() == RANGE_SIEGE && p.HornSiege) {
+	if (c.GetRange() == RangeClose && p.HornClose) ||
+		(c.GetRange() == RangeRanged && p.HornRanged) ||
+		(c.GetRange() == RangeSiege && p.HornSiege) {
 		pwr *= 2
 	}
 	
@@ -77,10 +62,6 @@ func (c *CardUnit) GetPower(p *Player) int {
 
 func (c *CardUnit) IsHero() bool {
 	return c.Hero	
-}
-
-func (c *CardUnit) IsAppliedOnRow() bool {
-	return false
 }
 
 func (c *CardUnit) IsTargetable() bool {
