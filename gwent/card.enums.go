@@ -1,7 +1,9 @@
 package gwent
 
+// CardFaction defines faction of card
 type CardFaction int
 
+// List of card factions
 const (
 	FactionNeutral        = CardFaction(iota)
 	FactionNilfgaard      //Wins any round ending in draw
@@ -10,8 +12,10 @@ const (
 	FactionScoiatael      //Decides who takes first turn
 )
 
+// CardRange defines range of card
 type CardRange int
 
+// List of card ranges
 const (
 	RangeNone = CardRange(iota)
 	RangeClose
@@ -19,8 +23,10 @@ const (
 	RangeSiege
 )
 
+// CardType defines type of card
 type CardType int
 
+// List of card types
 const (
 	TypeBasic = CardType(iota)
 	TypeHorn

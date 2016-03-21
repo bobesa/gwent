@@ -15,7 +15,7 @@ type CardTemplate struct {
 }
 
 // GetLeaderEffectByName reports LeaderFx from given name
-func GetLeaderEffectByName(name string) int {
+func GetLeaderEffectByName(name string) LeaderFx {
 	return LeaderFxNone
 }
 

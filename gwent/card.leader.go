@@ -3,7 +3,7 @@ package gwent
 // CardLeader is a ultimate card that each player has before the game starts
 type CardLeader struct {
 	CannotUse     bool
-	LeaderEffect  int
+	LeaderEffect  LeaderFx
 	LeaderFaction CardFaction
 
 	BasicCard
