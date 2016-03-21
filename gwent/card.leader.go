@@ -28,18 +28,18 @@ func (c *CardLeader) Play(p *Player, target Card) {
 		//Process various effects (by Type)
 		switch c.LeaderEffect {
 		//Other
-		case LEADER_FX_CANCEL:
+		case LeaderFxCancel:
 			p.OtherPlayer().Leader.Cancel()
-		case LEADER_FX_DRAW_EXTRA_CARD:
+		case LeaderFxDrawExtraCard:
 			p.DrawCard()
-		case LEADER_FX_DRAW_GRAVE:
-		case LEADER_FX_DRAW_OPPONENT_GRAVE:
-		case LEADER_FX_DISCARD_2_DRAW_1:
-		case LEADER_FX_LOOK_3_OPPONENT_CARDS:
-			//TODO: Actually solve this :)
+		case LeaderFxDrawGrave:
+		case LeaderFxDrawOpponentGrave:
+		case LeaderFxDiscard2Draw1:
+		case LeaderFxLook3OpponentCards:
+			//Todo: Actually solve this :)
 
 		//Destroy
-		case LEADER_FX_DESTROY_CLOSE_10_PLUS:
+		case LeaderFxDestroyClose10Plus:
 			if p.OtherPlayer().ComputePowerOfRow(RangeClose) >= 10 {
 				maxPwr := 0
 				for _, card := range p.OtherPlayer().RowClose {
@@ -51,7 +51,7 @@ func (c *CardLeader) Play(p *Player, target Card) {
 				p.OtherPlayer().RowClose, _ = p.OtherPlayer().RowClose.Scorch(p.OtherPlayer(), maxPwr)
 			}
 
-		case LEADER_FX_DESTROY_SIEGE_10_PLUS:
+		case LeaderFxDestroySiege10Plus:
 			if p.OtherPlayer().ComputePowerOfRow(RangeSiege) >= 10 {
 				maxPwr := 0
 				for _, card := range p.OtherPlayer().RowSiege {
@@ -64,27 +64,27 @@ func (c *CardLeader) Play(p *Player, target Card) {
 			}
 
 		//Weather
-		case LEADER_FX_PLAY_WEATHER_CLOSE:
+		case LeaderFxPlayWeatherClose:
 			if !c.PlayWeatherFromDeck(RangeClose, p) {
 				c.Ready()
 			}
-		case LEADER_FX_PLAY_WEATHER_RANGED:
+		case LeaderFxPlayWeatherRanged:
 			if !c.PlayWeatherFromDeck(RangeRanged, p) {
 				c.Ready()
 			}
-		case LEADER_FX_PLAY_WEATHER_SIEGE:
+		case LeaderFxPlayWeatherSiege:
 			if !c.PlayWeatherFromDeck(RangeSiege, p) {
 				c.Ready()
 			}
-		case LEADER_FX_WEATHER_CLEAR:
+		case LeaderFxWeatherClear:
 			p.Game.ClearWeather()
 
 		//Horn
-		case LEADER_FX_HORN_CLOSE:
+		case LeaderFxHornClose:
 			p.HornClose = true
-		case LEADER_FX_HORN_RANGED:
+		case LeaderFxHornRanged:
 			p.HornRanged = true
-		case LEADER_FX_HORN_SIEGE:
+		case LeaderFxHornSiege:
 			p.HornSiege = true
 		}
 	}
@@ -97,7 +97,7 @@ func (c *CardLeader) PlayOnRow(p *Player, row CardRange) {
 
 		//Process various effects (by Type)
 		switch c.LeaderEffect {
-		case LEADER_FX_PLAY_WEATHER_ANY:
+		case LeaderFxPlayWeatherAny:
 			if !c.PlayWeatherFromDeck(row, p) {
 				c.Ready()
 			}
@@ -127,6 +127,6 @@ func (c *CardLeader) Type() CardType {
 
 // Targettable reports if leader fx is targettable or not
 func (c *CardLeader) Targettable() bool {
-	//TODO: Treat by effect type
+	//Todo: Treat by effect type
 	return false
 }

@@ -7,18 +7,22 @@ import (
 )
 
 const (
-	GWENT_VERSION   = "0.1a"
-	GWENT_PATH_QUIT = "/quit"
-	GWENT_PATH_API  = "/api/"
+	// Version of Gwent server
+	Version = "0.1a"
+	// PathQuit defines http path to stop the Gwent server
+	PathQuit = "/quit"
+	// PathAPI defines http path to api of Gwent server
+	PathAPI = "/api/"
 
-	GWENT_PATH_API_LEN = len(GWENT_PATH_API)
+	pathAPILen = len(PathAPI)
 )
 
-func ProcessRestApi(w http.ResponseWriter, r *http.Request) {
-	segments := strings.Split(r.URL.Path[GWENT_PATH_API_LEN:], "/")
+// ProcessRestAPI is our http call
+func ProcessRestAPI(w http.ResponseWriter, r *http.Request) {
+	segments := strings.Split(r.URL.Path[pathAPILen:], "/")
 
 	if len(segments) == 0 {
-		//Handle nothiiing
+		//Handle nothing
 		w.Write([]byte(":)"))
 	} else {
 		switch segments[0] {

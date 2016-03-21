@@ -5,13 +5,13 @@ import "testing"
 func TestLeaderCards_HornClose(t *testing.T) {
 	//Prepare players & cards
 	p1, p2 := MakePlayer("test 1", FactionNorthernRealms, GenerateDeckWithUnitCards(RangeSiege, 5, 30)), MakePlayer("test 2", FactionMonsters, GenerateDeckWithUnitCards(RangeClose, 5, 30))
-	p1.Leader = &CardLeader{LeaderEffect: LEADER_FX_HORN_SIEGE}
+	p1.Leader = &CardLeader{LeaderEffect: LeaderFxHornSiege}
 
 	//Create & reset game
 	g := MakeGame(p1, p2)
 
 	//Check "Horn on Siege units"
-	p1.Leader.LeaderEffect = LEADER_FX_HORN_SIEGE
+	p1.Leader.LeaderEffect = LeaderFxHornSiege
 	p1.Play(p1.Hand[0], nil)
 	if p1.ComputePower() != 5 {
 		t.Error("Combat power should NOT be doubled before siege horn leader power is used")
@@ -28,16 +28,16 @@ func TestLeaderCards_HornClose(t *testing.T) {
 func TestLeaderCards_HornRanged(t *testing.T) {
 	//Prepare players & cards
 	p1, p2 := MakePlayer("test 1", FactionNorthernRealms, GenerateDeckWithUnitCards(RangeRanged, 5, 30)), MakePlayer("test 2", FactionMonsters, GenerateDeckWithUnitCards(RangeClose, 5, 30))
-	p1.Leader = &CardLeader{LeaderEffect: LEADER_FX_HORN_RANGED}
+	p1.Leader = &CardLeader{LeaderEffect: LeaderFxHornRanged}
 
 	//Create & reset game
 	g := MakeGame(p1, p2)
 
 	//Check "Horn on Ranged units"
-	p1.Leader.LeaderEffect = LEADER_FX_HORN_RANGED
+	p1.Leader.LeaderEffect = LeaderFxHornRanged
 	p1.Play(p1.Hand[0], nil)
 	if p1.ComputePower() != 5 {
-		t.Error("Combat power should NOT be doubled before ranged horn leader power is used")
+		t.Error("Combat power should Not be doubled before ranged horn leader power is used")
 	}
 	p1.PlayLeader(nil)
 	if p1.ComputePower() != 10 {
@@ -51,16 +51,16 @@ func TestLeaderCards_HornRanged(t *testing.T) {
 func TestLeaderCards_HornSiege(t *testing.T) {
 	//Prepare players & cards
 	p1, p2 := MakePlayer("test 1", FactionNorthernRealms, GenerateDeckWithUnitCards(RangeClose, 5, 30)), MakePlayer("test 2", FactionMonsters, GenerateDeckWithUnitCards(RangeClose, 5, 30))
-	p1.Leader = &CardLeader{LeaderEffect: LEADER_FX_HORN_CLOSE}
+	p1.Leader = &CardLeader{LeaderEffect: LeaderFxHornClose}
 
 	//Create & reset game
 	g := MakeGame(p1, p2)
 
 	//Check "Horn on Close units"
-	p1.Leader.LeaderEffect = LEADER_FX_HORN_CLOSE
+	p1.Leader.LeaderEffect = LeaderFxHornClose
 	p1.Play(p1.Hand[0], nil)
 	if p1.ComputePower() != 5 {
-		t.Error("Combat power should NOT be doubled before close horn leader power is used")
+		t.Error("Combat power should Not be doubled before close horn leader power is used")
 	}
 	p1.PlayLeader(nil)
 	if p1.ComputePower() != 10 {
@@ -74,14 +74,14 @@ func TestLeaderCards_HornSiege(t *testing.T) {
 func TestLeaderCards_WeatherClear(t *testing.T) {
 	//Prepare players & cards
 	p1, p2 := MakePlayer("test 1", FactionNorthernRealms, GenerateDeckWithUnitCards(RangeClose, 5, 30)), MakePlayer("test 2", FactionMonsters, GenerateDeckWithUnitCards(RangeClose, 5, 30))
-	p1.Leader = &CardLeader{LeaderEffect: LEADER_FX_HORN_CLOSE}
+	p1.Leader = &CardLeader{LeaderEffect: LeaderFxHornClose}
 
 	//Create & reset game
 	g := MakeGame(p1, p2)
 
 	//Check
 	weatherCardClose, weatherCardRanged := &CardWeather{Target: RangeClose}, &CardWeather{Target: RangeRanged}
-	p1.Leader.LeaderEffect = LEADER_FX_WEATHER_CLEAR
+	p1.Leader.LeaderEffect = LeaderFxWeatherClear
 	p1.GiveCard(weatherCardClose)
 	p1.GiveCard(weatherCardRanged)
 	p1.Play(weatherCardClose, nil)
@@ -90,7 +90,7 @@ func TestLeaderCards_WeatherClear(t *testing.T) {
 		t.Error("Close & Ranged weathers should be applied")
 	}
 	if p1.Game.WeatherSiege {
-		t.Error("Siege weather should NOT be applied")
+		t.Error("Siege weather should Not be applied")
 	}
 	p1.PlayLeader(nil)
 	if p1.Game.WeatherClose || p1.Game.WeatherRanged || p1.Game.WeatherSiege {
@@ -104,18 +104,18 @@ func TestLeaderCards_WeatherClear(t *testing.T) {
 func TestLeaderCards_WeatherClose(t *testing.T) {
 	//Prepare players & cards
 	p1, p2 := MakePlayer("test 1", FactionNorthernRealms, GenerateDeckWithUnitCards(RangeClose, 5, 30)), MakePlayer("test 2", FactionMonsters, GenerateDeckWithUnitCards(RangeClose, 5, 30))
-	p1.Leader = &CardLeader{LeaderEffect: LEADER_FX_PLAY_WEATHER_CLOSE}
+	p1.Leader = &CardLeader{LeaderEffect: LeaderFxPlayWeatherClose}
 
 	//Create & reset game
 	g := MakeGame(p1, p2)
 
 	//Check effect without proper card
 	if p1.Game.WeatherClose || p1.Game.WeatherSiege || p1.Game.WeatherRanged {
-		t.Error("Weather should NOT be applied")
+		t.Error("Weather should Not be applied")
 	}
 	p1.PlayLeader(nil)
 	if p1.Game.WeatherClose {
-		t.Error("Close weather should NOT be applied (we don't have proper weather card in deck)")
+		t.Error("Close weather should Not be applied (we don't have proper weather card in deck)")
 	}
 	if p1.Leader.CannotUse {
 		t.Error("Leader effect was marked as used without available weather card")
@@ -139,18 +139,18 @@ func TestLeaderCards_WeatherClose(t *testing.T) {
 func TestLeaderCards_WeatherRanged(t *testing.T) {
 	//Prepare players & cards
 	p1, p2 := MakePlayer("test 1", FactionNorthernRealms, GenerateDeckWithUnitCards(RangeRanged, 5, 30)), MakePlayer("test 2", FactionMonsters, GenerateDeckWithUnitCards(RangeClose, 5, 30))
-	p1.Leader = &CardLeader{LeaderEffect: LEADER_FX_PLAY_WEATHER_RANGED}
+	p1.Leader = &CardLeader{LeaderEffect: LeaderFxPlayWeatherRanged}
 
 	//Create & reset game
 	g := MakeGame(p1, p2)
 
 	//Check effect without proper card
 	if p1.Game.WeatherClose || p1.Game.WeatherSiege || p1.Game.WeatherRanged {
-		t.Error("Weather should NOT be applied")
+		t.Error("Weather should Not be applied")
 	}
 	p1.PlayLeader(nil)
 	if p1.Game.WeatherRanged {
-		t.Error("Close weather should NOT be applied (we don't have proper weather card in deck)")
+		t.Error("Close weather should Not be applied (we don't have proper weather card in deck)")
 	}
 	if p1.Leader.CannotUse {
 		t.Error("Leader effect was marked as used without available weather card")
@@ -174,18 +174,18 @@ func TestLeaderCards_WeatherRanged(t *testing.T) {
 func TestLeaderCards_WeatherSiege(t *testing.T) {
 	//Prepare players & cards
 	p1, p2 := MakePlayer("test 1", FactionNorthernRealms, GenerateDeckWithUnitCards(RangeSiege, 5, 30)), MakePlayer("test 2", FactionMonsters, GenerateDeckWithUnitCards(RangeClose, 5, 30))
-	p1.Leader = &CardLeader{LeaderEffect: LEADER_FX_PLAY_WEATHER_SIEGE}
+	p1.Leader = &CardLeader{LeaderEffect: LeaderFxPlayWeatherSiege}
 
 	//Create & reset game
 	g := MakeGame(p1, p2)
 
 	//Check effect without proper card
 	if p1.Game.WeatherClose || p1.Game.WeatherSiege || p1.Game.WeatherRanged {
-		t.Error("Weather should NOT be applied")
+		t.Error("Weather should Not be applied")
 	}
 	p1.PlayLeader(nil)
 	if p1.Game.WeatherSiege {
-		t.Error("Close weather should NOT be applied (we don't have proper weather card in deck)")
+		t.Error("Close weather should Not be applied (we don't have proper weather card in deck)")
 	}
 	if p1.Leader.CannotUse {
 		t.Error("Leader effect was marked as used without available weather card")
@@ -209,7 +209,7 @@ func TestLeaderCards_WeatherSiege(t *testing.T) {
 func TestLeaderCards_DrawExtraCard(t *testing.T) {
 	//Prepare players & cards
 	p1, p2 := MakePlayer("test 1", FactionNorthernRealms, GenerateDeckWithUnitCards(RangeSiege, 5, 30)), MakePlayer("test 2", FactionMonsters, GenerateDeckWithUnitCards(RangeClose, 5, 30))
-	p1.Leader = &CardLeader{LeaderEffect: LEADER_FX_DRAW_EXTRA_CARD}
+	p1.Leader = &CardLeader{LeaderEffect: LeaderFxDrawExtraCard}
 
 	//Create & reset game
 	g := MakeGame(p1, p2)
@@ -226,7 +226,7 @@ func TestLeaderCards_DrawExtraCard(t *testing.T) {
 func TestLeaderCards_DestroyClose(t *testing.T) {
 	//Prepare players & cards
 	p1, p2 := MakePlayer("test 1", FactionNorthernRealms, GenerateDeckWithUnitCards(RangeSiege, 5, 30)), MakePlayer("test 2", FactionMonsters, GenerateDeckWithUnitCards(RangeClose, 5, 30))
-	p1.Leader = &CardLeader{LeaderEffect: LEADER_FX_DESTROY_CLOSE_10_PLUS}
+	p1.Leader = &CardLeader{LeaderEffect: LeaderFxDestroyClose10Plus}
 
 	//Create & reset game
 	g := MakeGame(p1, p2)
@@ -257,7 +257,7 @@ func TestLeaderCards_DestroyClose(t *testing.T) {
 func TestLeaderCards_DestroySiege(t *testing.T) {
 	//Prepare players & cards
 	p1, p2 := MakePlayer("test 1", FactionNorthernRealms, GenerateDeckWithUnitCards(RangeSiege, 5, 30)), MakePlayer("test 2", FactionMonsters, GenerateDeckWithUnitCards(RangeSiege, 5, 30))
-	p1.Leader = &CardLeader{LeaderEffect: LEADER_FX_DESTROY_SIEGE_10_PLUS}
+	p1.Leader = &CardLeader{LeaderEffect: LeaderFxDestroySiege10Plus}
 
 	//Create & reset game
 	g := MakeGame(p1, p2)

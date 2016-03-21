@@ -253,7 +253,7 @@ func (p *Player) Reset() {
 	}
 
 	//Check for Leader-related effects
-	if p.Leader != nil && p.Leader.LeaderEffect == LEADER_FX_DRAW_EXTRA_CARD {
+	if p.Leader != nil && p.Leader.LeaderEffect == LeaderFxDrawExtraCard {
 		p.Leader.Play(p, nil)
 	}
 }

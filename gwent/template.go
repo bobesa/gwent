@@ -14,7 +14,7 @@ type CardTemplate struct {
 }
 
 func GetLeaderEffectByName(name string) int {
-	return LEADER_FX_NONE
+	return LeaderFxNone
 }
 
 func GetUnitAbilityByName(name string) int {
