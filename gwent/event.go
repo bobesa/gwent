@@ -36,7 +36,7 @@ type Event struct {
 // MakeEvent creates new event for given game, card, target etc.
 func MakeEvent(g *Game, card, target Card, eventType string, p *Player) Event {
 	e := Event{
-		ID:     g.GetNextEventId(),
+		ID:     g.GetNextEventID(),
 		Card:   card.GUID(),
 		Target: card.GUID(),
 		Type:   eventType,

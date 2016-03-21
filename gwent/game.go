@@ -1,20 +1,21 @@
 package gwent
 
+// MakeGame creates new game instance
 func MakeGame(p1 *Player, p2 *Player) *Game {
 	//Setup game
 	g := &Game{
 		Closed:         false,
 		Player1:        p1,
 		Player2:        p2,
-		eventIdChannel: make(chan int64, 10),
+		eventIDChannel: make(chan int64, 10),
 	}
 
 	//Generate event ID channel
 	go func() {
-		eId := int64(0)
+		eID := int64(0)
 		for !g.Closed {
-			eId++
-			g.eventIdChannel <- eId
+			eID++
+			g.eventIDChannel <- eID
 		}
 	}()
 
@@ -24,6 +25,7 @@ func MakeGame(p1 *Player, p2 *Player) *Game {
 	return g
 }
 
+// Game describes contents of single game
 type Game struct {
 	//States
 	Closed                                    bool
@@ -37,31 +39,36 @@ type Game struct {
 
 	//Events
 	History        []Event
-	eventIdChannel chan int64
+	eventIDChannel chan int64
 }
 
-func (g *Game) GetNextEventId() int64 {
-	return <-g.eventIdChannel
+// GetNextEventID generates new event ID
+func (g *Game) GetNextEventID() int64 {
+	return <-g.eventIDChannel
 }
 
+// MakeEvent creates new event and posts it to list of events
 func (g *Game) MakeEvent(card, target Card, eventType string, p *Player) {
 	g.PostEvent(MakeEvent(g, card, target, eventType, p))
 }
 
+// PostEvent posts event to history and players
 func (g *Game) PostEvent(e Event) {
+	//TODO: Actually post it to player events
 	//g.Player1.NewEvents <- e
 	//g.Player2.NewEvents <- e
 	g.History = append(g.History, e)
 }
 
+// GetCurrentPlayer reports player that is on move
 func (g *Game) GetCurrentPlayer() *Player {
 	if g.Turn%2 == 0 {
 		return g.Player1
-	} else {
-		return g.Player2
 	}
+	return g.Player2
 }
 
+// Reset resets the game & effects
 func (g *Game) Reset() {
 	g.Player1.Game = g
 	g.Player2.Game = g
@@ -70,10 +77,12 @@ func (g *Game) Reset() {
 	g.ClearWeather()
 }
 
+// ClearWeather clears the weather effects
 func (g *Game) ClearWeather() {
 	g.WeatherClose, g.WeatherRanged, g.WeatherSiege = false, false, false
 }
 
+// NextRound clears table, effects and moves to next round
 func (g *Game) NextRound() {
 	//Check winner
 	if g.Player1.Lives == 0 || g.Player2.Lives == 0 {
@@ -92,6 +101,8 @@ func (g *Game) NextRound() {
 	g.Player2.ResetRows()
 }
 
+// Next moves to next turn
+// If both players are done, powers are computed and winner is chosen
 func (g *Game) Next() {
 	g.Turn++
 
@@ -108,10 +119,10 @@ func (g *Game) Next() {
 		} else {
 			//Tie
 			if g.Player1.Faction == FactionNilfgaard && g.Player2.Faction != FactionNilfgaard {
-				//Player 1 is NILFGAARD
+				//Player 1 is Nilfgaard
 				g.Player2.Lost()
 			} else if g.Player1.Faction != FactionNilfgaard && g.Player2.Faction == FactionNilfgaard {
-				//Player 2 is NILFGAARD
+				//Player 2 is Nilfgaard
 				g.Player1.Lost()
 			} else {
 				//Both players lose life
