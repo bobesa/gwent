@@ -1,17 +1,29 @@
 package gwent
 
 const (
-	EventToHand  = "to_hand"  //"Card" should go to hand
-	EventToDeck  = "to_deck"  //"Card" should go to deck
-	EventToGrave = "to_grave" //"Card" should go to grave
-	EventToTable = "to_table" //"Card" should go to table
+	// EventToHand means that card should go to hand
+	EventToHand = "to_hand"
 
-	EventPick   = "pick"   //From server: Sent with Cards for player to select
-	EventPicked = "picked" //From player: Sent with selected Card
+	// EventToDeck means that card should go to deck
+	EventToDeck = "to_deck"
+
+	// EventToGrave means that card should go to grave
+	EventToGrave = "to_grave"
+
+	// EventToTable means that card should go to table
+	EventToTable = "to_table"
+
+	// EventPick gives player list of cards to select from.
+	// This should be followed by EventPicked event coming from player
+	EventPick = "pick"
+
+	// EventPicked player picked card from selection
+	EventPicked = "picked"
 )
 
+// Event is json structure describing game events
 type Event struct {
-	Id     int64  `json:"id"`
+	ID     int64  `json:"id"`
 	Type   string `json:"type,omitempty"`
 	Cards  Cards  `json:"cards,omitempty"`
 	Card   GUID   `json:"card,omitempty"`   //GUID of selected card
@@ -21,9 +33,10 @@ type Event struct {
 	game *Game
 }
 
+// MakeEvent creates new event for given game, card, target etc.
 func MakeEvent(g *Game, card, target Card, eventType string, p *Player) Event {
 	e := Event{
-		Id:     g.GetNextEventId(),
+		ID:     g.GetNextEventId(),
 		Card:   card.GUID(),
 		Target: card.GUID(),
 		Type:   eventType,

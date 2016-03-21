@@ -5,12 +5,12 @@ import (
 	"io/ioutil"
 )
 
-var AllTemplates []CardTemplate
+var allTemplates []CardTemplate
 
 func init() {
-	AllTemplates = make([]CardTemplate, 0)
+	allTemplates = make([]CardTemplate, 0)
 
-	templateId := int64(0)
+	templateID := int64(0)
 	directory := "./cards"
 
 	files, _ := ioutil.ReadDir(directory)
@@ -22,9 +22,9 @@ func init() {
 			//Go trough all templates and assign IDs
 			if err == nil {
 				for _, template := range templates {
-					templateId++
-					template.Id = templateId
-					AllTemplates = append(AllTemplates, template)
+					templateID++
+					template.ID = templateID
+					allTemplates = append(allTemplates, template)
 				}
 			}
 		}

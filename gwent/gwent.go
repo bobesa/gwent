@@ -27,7 +27,7 @@ func ProcessRestAPI(w http.ResponseWriter, r *http.Request) {
 	} else {
 		switch segments[0] {
 		case "cards":
-			b, _ := json.Marshal(AllTemplates)
+			b, _ := json.Marshal(allTemplates)
 			w.Write(b)
 
 		default:

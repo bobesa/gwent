@@ -1,7 +1,8 @@
 package gwent
 
+// CardTemplate defines our json structure for loading the cards
 type CardTemplate struct {
-	Id          int64  `json:"id"`
+	ID          int64  `json:"id"`
 	Name        string `json:"name,omitempty"`
 	Description string `json:"description,omitempty"`
 	Power       int    `json:"power,omitempty"`
@@ -13,14 +14,17 @@ type CardTemplate struct {
 	MaxCount    int    `json:"max,omitempty"`
 }
 
+// GetLeaderEffectByName reports LeaderFx from given name
 func GetLeaderEffectByName(name string) int {
 	return LeaderFxNone
 }
 
+// GetUnitAbilityByName reports our Ability from given name
 func GetUnitAbilityByName(name string) int {
 	return AbilityNone
 }
 
+// GetFactionByName reports our CardFaction from given name
 func GetFactionByName(name string) CardFaction {
 	switch name {
 	case "nilfgaard":
@@ -36,6 +40,7 @@ func GetFactionByName(name string) CardFaction {
 	}
 }
 
+// Make creates an instance of Card from given template
 func (t CardTemplate) Make() Card {
 	switch t.Type {
 	case "leader":
