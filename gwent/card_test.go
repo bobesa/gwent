@@ -48,7 +48,7 @@ func TestCombatSimple(t *testing.T) {
 
 	if p1.ComputePower() != 0 || p2.ComputePower() != 0 {
 		t.Error("There should be zero power after end of the round")
-	} else if p2.Lifes != 1 {
+	} else if p2.Lives != 1 {
 		t.Error("Player should lose a life after defeat")
 	}
 }
@@ -65,7 +65,7 @@ func TestCombatDraw(t *testing.T) {
 	p1.Pass()
 	g.Next()
 
-	if p1.Lifes > 1 || p2.Lifes > 1 {
+	if p1.Lives > 1 || p2.Lives > 1 {
 		t.Error("Both players should lose life upon draw")
 	}
 }
@@ -82,7 +82,7 @@ func TestFactionBonusNilfgaard(t *testing.T) {
 	p2.Pass()
 	g.Next()
 
-	if p2.Lifes != 1 {
+	if p2.Lives != 1 {
 		t.Error("Player should lose a life after a draw")
 	}
 }

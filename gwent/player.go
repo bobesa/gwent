@@ -4,6 +4,7 @@ import (
 	"math/rand"
 )
 
+// MakePlayer creates new instance of player
 func MakePlayer(name string, faction CardFaction, cards Cards) *Player {
 	return &Player{
 		Name:    name,
@@ -22,9 +23,10 @@ func MakePlayer(name string, faction CardFaction, cards Cards) *Player {
 	}
 }
 
+// Player describes what cards, stats etc. player has
 type Player struct {
 	Name                             string
-	Lifes                            int
+	Lives                            int
 	Faction                          CardFaction
 	Leader                           *CardLeader
 	Cards                            Cards
@@ -42,32 +44,38 @@ type Player struct {
 	NewEvents chan Event
 }
 
+// IsActive reports if this player is currently on move
 func (p *Player) IsActive() bool {
 	return p == p.Game.GetCurrentPlayer()
 }
 
+// Play plays given card on given target
 func (p *Player) Play(card Card, target Card) {
 	card.Play(p, target)
 	p.Hand = p.Hand.Without(card)
 }
 
-func (p *Player) PlayOnRow(card Card, target CardRange) {
-	card.PlayOnRow(p, target)
+// PlayOnRow plays given card on given row
+func (p *Player) PlayOnRow(card Card, row CardRange) {
+	card.PlayOnRow(p, row)
 	p.Hand = p.Hand.Without(card)
 }
 
+// PlayLeader plays leader card effect on target
 func (p *Player) PlayLeader(target Card) {
 	if p.Leader != nil && !p.Leader.CannotUse {
 		p.Leader.Play(p, target)
 	}
 }
 
+// PlayLeaderOnRow plays leader card effect on row
 func (p *Player) PlayLeaderOnRow(target CardRange) {
 	if p.Leader != nil && !p.Leader.CannotUse {
 		p.Leader.PlayOnRow(p, target)
 	}
 }
 
+// Horn applies "Horn" effect on given row
 func (p *Player) Horn(where CardRange) {
 	switch where {
 	case RangeClose:
@@ -79,6 +87,7 @@ func (p *Player) Horn(where CardRange) {
 	}
 }
 
+// Scorch applies "Scorch" effect on opponent's table
 func (p *Player) Scorch() {
 	//Go trough whole table and select highest power card
 	maxPower := 0
@@ -121,6 +130,7 @@ func (p *Player) Scorch() {
 	p.OtherPlayer().Grave = append(p.OtherPlayer().Grave, k3...)
 }
 
+// ComputePower reports total power of cards
 func (p *Player) ComputePower() int {
 	pwr := 0
 
@@ -138,6 +148,7 @@ func (p *Player) ComputePower() int {
 	return pwr
 }
 
+// ComputePowerOfRow reports total power of row
 func (p *Player) ComputePowerOfRow(row CardRange) int {
 	pwr := 0
 
@@ -160,6 +171,7 @@ func (p *Player) ComputePowerOfRow(row CardRange) int {
 	return pwr
 }
 
+// OtherPlayer reports opponent player
 func (p *Player) OtherPlayer() *Player {
 	if p.Game.Player1 == p {
 		return p.Game.Player2
@@ -167,12 +179,15 @@ func (p *Player) OtherPlayer() *Player {
 	return p.Game.Player1
 }
 
+// Pass passes this round
 func (p *Player) Pass() {
 	p.Passed = true
 }
 
+// Lost removes single life of player
+// Ends the game if player has none
 func (p *Player) Lost() {
-	p.Lifes--
+	p.Lives--
 
 	//Set LastRoundWinner of the game
 	if p.Game.Player1 == p {
@@ -182,6 +197,7 @@ func (p *Player) Lost() {
 	}
 }
 
+// ResetRows empties the table (and applies Monster faction effect if possible)
 func (p *Player) ResetRows() {
 	//Faction related effects
 	var monsterCard Card
@@ -216,12 +232,14 @@ func (p *Player) ResetRows() {
 	p.HornClose, p.HornRanged, p.HornSiege = false, false, false
 }
 
+// GiveCard gives card to players hand
 func (p *Player) GiveCard(c Card) {
 	if c != nil {
 		p.Hand = append(p.Hand, c)
 	}
 }
 
+// DrawCard give card to players hand from players deck
 func (p *Player) DrawCard() {
 	if len(p.Deck) > 0 {
 		index := rand.Intn(len(p.Deck)) //random card index from rest of the deck
@@ -232,9 +250,10 @@ func (p *Player) DrawCard() {
 	}
 }
 
+// Reset resets hand, sets player lives to 2
 func (p *Player) Reset() {
 	//Reset Lifes to 2
-	p.Lifes = 2
+	p.Lives = 2
 
 	//Reset CurrentDeck to "Original" Deck
 	p.Deck = p.Cards

@@ -76,7 +76,7 @@ func (g *Game) ClearWeather() {
 
 func (g *Game) NextRound() {
 	//Check winner
-	if g.Player1.Lifes == 0 || g.Player2.Lifes == 0 {
+	if g.Player1.Lives == 0 || g.Player2.Lives == 0 {
 		//WINNER
 	}
 
