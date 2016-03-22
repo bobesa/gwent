@@ -70,8 +70,7 @@ func (g *Game) GetCurrentPlayer() *Player {
 
 // Reset resets the game & effects
 func (g *Game) Reset() {
-	g.Player1.Game = g
-	g.Player2.Game = g
+	g.Player1.Game, g.Player2.Game = g, g
 	g.Player1.Reset()
 	g.Player2.Reset()
 	g.ClearWeather()
@@ -93,8 +92,7 @@ func (g *Game) NextRound() {
 	g.ClearWeather()
 
 	//Reset Passed
-	g.Player1.Passed = false
-	g.Player2.Passed = false
+	g.Player1.Passed, g.Player2.Passed = false, false
 
 	//Reset Rows
 	g.Player1.ResetRows()

@@ -217,9 +217,7 @@ func (p *Player) ResetRows() {
 	p.Grave = append(p.Grave, p.RowSiege...)
 
 	//Reset rows
-	p.RowClose = make(Cards, 0)
-	p.RowRanged = make(Cards, 0)
-	p.RowSiege = make(Cards, 0)
+	p.RowClose, p.RowRanged, p.RowSiege = make(Cards, 0), make(Cards, 0), make(Cards, 0)
 
 	//Faction related post-effects
 	if p.Faction == FactionMonsters && monsterCard != nil {
