@@ -21,14 +21,17 @@ const (
 	EventPicked = "picked"
 )
 
+// EventID defines what should be used for type
+type EventID uint64
+
 // Event is json structure describing game events
 type Event struct {
-	ID     int64  `json:"id"`
-	Type   string `json:"type,omitempty"`
-	Cards  Cards  `json:"cards,omitempty"`
-	Card   GUID   `json:"card,omitempty"`   //GUID of selected card
-	Target GUID   `json:"target,omitempty"` //GUID of target card
-	Player int    `json:"player"`           //1 = player 1 etc.
+	ID     EventID `json:"id"`
+	Type   string  `json:"type,omitempty"`
+	Cards  Cards   `json:"cards,omitempty"`
+	Card   GUID    `json:"card,omitempty"`   //GUID of selected card
+	Target GUID    `json:"target,omitempty"` //GUID of target card
+	Player int     `json:"player"`           //1 = player 1 etc.
 
 	game *Game
 }

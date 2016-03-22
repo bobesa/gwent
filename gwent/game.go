@@ -7,12 +7,12 @@ func MakeGame(p1 *Player, p2 *Player) *Game {
 		Closed:         false,
 		Player1:        p1,
 		Player2:        p2,
-		eventIDChannel: make(chan int64, 10),
+		eventIDChannel: make(chan EventID, 10),
 	}
 
 	//Generate event ID channel
 	go func() {
-		eID := int64(0)
+		eID := EventID(0)
 		for !g.Closed {
 			eID++
 			g.eventIDChannel <- eID
@@ -39,11 +39,11 @@ type Game struct {
 
 	//Events
 	History        []Event
-	eventIDChannel chan int64
+	eventIDChannel chan EventID
 }
 
 // GetNextEventID generates new event ID
-func (g *Game) GetNextEventID() int64 {
+func (g *Game) GetNextEventID() EventID {
 	return <-g.eventIDChannel
 }
 
