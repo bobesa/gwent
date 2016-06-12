@@ -21,6 +21,16 @@ func (deck Cards) Scorch(owner *Player, pwr int) (Cards, Cards) {
 	return cards, destroyed
 }
 
+// ByID reports back Card with given ID or nil
+func (deck Cards) ByID(cardID GUID) Card {
+	for _, card := range deck {
+		if card.GUID() == cardID {
+			return card
+		}
+	}
+	return nil
+}
+
 // Without reports back Cards without a single given card
 func (deck Cards) Without(c Card) Cards {
 	for i, card := range deck {

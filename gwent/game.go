@@ -52,6 +52,32 @@ func (g *Game) MakeEvent(card, target Card, eventType string, p *Player) {
 	g.PostEvent(MakeEvent(g, card, target, eventType, p))
 }
 
+// CardByID reports Card or nil based on provided GUID
+func (g *Game) CardByID(cardID GUID) Card {
+	// Check if Player1 has card with this GUID and report it
+	if c := g.Player1.CardByID(cardID); c != nil {
+		return c
+	}
+
+	// Report card by that GUID from Player2
+	// This can also result to nil so we don't have to check it as it is expected
+	return g.Player2.CardByID(cardID)
+}
+
+// ApplyEvent applies effects of given event
+func (g *Game) ApplyEvent(e Event) {
+	// Apply event if possible
+	switch(e.Type) {
+	case EventToHand:
+		card := g.CardByID(e.CardID)
+		if card != nil {
+			e.Player().GiveCard(card)
+		} else {
+			//TODO: Log that card is nil
+		}
+	}
+}
+
 // PostEvent posts event to history and players
 func (g *Game) PostEvent(e Event) {
 	//TODO: Actually post it to player events

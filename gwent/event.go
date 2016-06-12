@@ -26,12 +26,12 @@ type EventID uint64
 
 // Event is json structure describing game events
 type Event struct {
-	ID     EventID `json:"id"`
-	Type   string  `json:"type,omitempty"`
-	Cards  Cards   `json:"cards,omitempty"`
-	Card   GUID    `json:"card,omitempty"`   //GUID of selected card
-	Target GUID    `json:"target,omitempty"` //GUID of target card
-	Player int     `json:"player"`           //1 = player 1 etc.
+	ID       EventID `json:"id"`
+	Type     string  `json:"type,omitempty"`
+	Cards    Cards   `json:"cards,omitempty"`
+	CardID   GUID    `json:"card,omitempty"`   //GUID of selected card
+	TargetID GUID    `json:"target,omitempty"` //GUID of target card
+	PlayerID int     `json:"player"`           //1 = player 1 etc.
 
 	game *Game
 }
@@ -39,19 +39,32 @@ type Event struct {
 // MakeEvent creates new event for given game, card, target etc.
 func MakeEvent(g *Game, card, target Card, eventType string, p *Player) Event {
 	e := Event{
-		ID:     g.GetNextEventID(),
-		Card:   card.GUID(),
-		Target: card.GUID(),
-		Type:   eventType,
+		ID:   g.GetNextEventID(),
+		Type: eventType,
 
 		game: g,
 	}
 
+	if card != nil {
+		e.CardID = card.GUID()
+	}
+	if target != nil {
+		e.TargetID = target.GUID()
+	}
+
 	if g.Player1 == p {
-		e.Player = 1
+		e.PlayerID = 1
 	} else {
-		e.Player = 2
+		e.PlayerID = 2
 	}
 
 	return e
+}
+
+// Player reports event player instance
+func (e Event) Player() *Player {
+	if e.PlayerID == 1 {
+		return e.game.Player1
+	}
+	return e.game.Player2
 }

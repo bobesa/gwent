@@ -237,6 +237,12 @@ func (p *Player) GiveCard(c Card) {
 	}
 }
 
+// CardByID reports Card or nil based on provided GUID
+func (p *Player) CardByID(cardID GUID) Card {
+	// TODO: Validate that this should only be checked on Deck and not on Hand
+	return p.Deck.ByID(cardID)
+}
+
 // DrawCard give card to players hand from players deck
 func (p *Player) DrawCard() {
 	if len(p.Deck) > 0 {
